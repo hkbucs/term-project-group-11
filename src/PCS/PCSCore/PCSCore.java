@@ -29,48 +29,48 @@ public class PCSCore extends AppThread {
     // run
     public void run() {
         Thread.currentThread().setName(id);
-	Timer.setTimer(id, mbox, pollTime, PollTimerID);
-	Timer.setTimer(id, mbox, openCloseGateTime, OpenCloseGateTimerID);	// for demo only!!!
-	log.info(id + ": starting...");
+		Timer.setTimer(id, mbox, pollTime, PollTimerID);
+		Timer.setTimer(id, mbox, openCloseGateTime, OpenCloseGateTimerID);	// for demo only!!!
+		log.info(id + ": starting...");
 
-	gateMBox = appKickstarter.getThread("GateHandler").getMBox();
+		gateMBox = appKickstarter.getThread("GateHandler").getMBox();
 
-	for (boolean quit = false; !quit;) {
-	    Msg msg = mbox.receive();
+		for (boolean quit = false; !quit;) {
+			Msg msg = mbox.receive();
 
-	    log.fine(id + ": message received: [" + msg + "].");
+			log.fine(id + ": message received: [" + msg + "].");
 
-	    switch (msg.getType()) {
-		case TimesUp:
-		    handleTimesUp(msg);
-		    break;
+			switch (msg.getType()) {
+			case TimesUp:
+				handleTimesUp(msg);
+				break;
 
-		case GateOpenReply:
-		    log.info(id + ": Gate is opened.");
-		    gateIsClosed = false;
-		    break;
+			case GateOpenReply:
+				log.info(id + ": Gate is opened.");
+				gateIsClosed = false;
+				break;
 
-		case GateCloseReply:
-		    log.info(id + ": Gate is closed.");
-		    gateIsClosed = true;
-		    break;
+			case GateCloseReply:
+				log.info(id + ": Gate is closed.");
+				gateIsClosed = true;
+				break;
 
-		case PollAck:
-		    log.info("PollAck: " + msg.getDetails());
-		    break;
+			case PollAck:
+				log.info("PollAck: " + msg.getDetails());
+				break;
 
-		case Terminate:
-		    quit = true;
-		    break;
+			case Terminate:
+				quit = true;
+				break;
 
-		default:
-		    log.warning(id + ": unknown message type: [" + msg + "]");
-	    }
-	}
+			default:
+				log.warning(id + ": unknown message type: [" + msg + "]");
+			}
+		}
 
-	// declaring our departure
-	appKickstarter.unregThread(this);
-	log.info(id + ": terminating...");
+		// declaring our departure
+		appKickstarter.unregThread(this);
+		log.info(id + ": terminating...");
     } // run
 
 
