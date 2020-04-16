@@ -11,7 +11,9 @@ import PCS.GateHandler.Emulator.GateEmulator;
 //import PCS.DispatcherHandler.Emulator.DispatcherEmulator;
 
 import PCS.SensorHandler.SensorHandler;
+import PCS.SensorHandler.Emulator.SensorEmulator;
 import PCS.VacancyDispHandler.VacancyDispHandler;
+import PCS.VacancyDispHandler.Emulator.VacancyDispEmulator;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -61,17 +63,20 @@ public class PCSEmulatorStarter extends PCSStarter
             GateEmulator gateEmulator = null;
             //DispatcherEmulator dispatcherEmulator = null;
             //CollectorEmulator collectorEmulator = null;
-            SensorHandler sensorHandler = null;
-            VacancyDispHandler vacancyDispHandler = null;
+            SensorEmulator sensorEmulator = null;
+            VacancyDispEmulator vacancyDispEmulator = null;
 
             // create emulators
             try {
                 timer = new Timer("timer", pcsEmulatorStarter);
                 pcsCore = new PCSCore("PCSCore", pcsEmulatorStarter);
                 gateEmulator = new GateEmulator("GateHandler", pcsEmulatorStarter);
-
+                sensorEmulator = new SensorEmulator("SensorHandler",pcsEmulatorStarter);
+                vacancyDispEmulator = new VacancyDispEmulator("VacancyDispHandler",pcsEmulatorStarter);
                 // start emulator GUIs
                 gateEmulator.start();
+                sensorEmulator.start();
+                vacancyDispEmulator.start();
                 //dispatcherEmulator.start();
                 //collectorEmulator.start();
             }
@@ -84,6 +89,8 @@ public class PCSEmulatorStarter extends PCSStarter
             pcsEmulatorStarter.setTimer(timer);
             pcsEmulatorStarter.setPCSCore(pcsCore);
             pcsEmulatorStarter.setGateHandler(gateEmulator);
+            pcsEmulatorStarter.setSensorHandler(sensorEmulator);
+            pcsEmulatorStarter.setVacancyDispHandler(vacancyDispEmulator);
             //pcsEmulatorStarter.setDispatcherHandler(dispatcherEmulator);
             //pcsEmulatorStarter.setCollectorHandler(collectorEmulator);
 
@@ -91,6 +98,8 @@ public class PCSEmulatorStarter extends PCSStarter
             new Thread(timer).start();
             new Thread(pcsCore).start();
             new Thread(gateEmulator).start();
+            new Thread(sensorEmulator).start();
+            new Thread(vacancyDispEmulator).start();
             //new Thread(dispatcherEmulator).start();
             //new Thread(collectorEmulator).start();
         } // start
@@ -108,7 +117,8 @@ public class PCSEmulatorStarter extends PCSStarter
     private void setGateHandler(GateHandler gateHandler) {
 	    this.gateHandler = gateHandler;
     }
-
+    private void setSensorHandler(SensorHandler sensorHandler){this.sensorHandler = sensorHandler;}
+    private void setVacancyDispHandler(VacancyDispHandler vacancyDispHandler){this.vacancydispHandler = vacancyDispHandler;}
     /**public void setDispatcherHandler(DispatcherHandler dispatcherHandler) {
         this.dispatcherHandler = dispatcherHandler;
     }

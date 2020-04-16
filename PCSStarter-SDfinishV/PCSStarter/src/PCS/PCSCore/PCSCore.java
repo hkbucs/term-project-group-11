@@ -14,18 +14,18 @@ public class PCSCore extends AppThread {
 
     private final int pollTime;
     private final int PollTimerID=1;
-    private final int openCloseGateTime;		// for demo only!!!
-    private final int OpenCloseGateTimerID=2;		// for demo only!!!
+    //private final int openCloseGateTime;		// for demo only!!!
+    //private final int OpenCloseGateTimerID=2;		// for demo only!!!
     private boolean gateIsClosed = true;		// for demo only!!!
-	private int CarsNumber;
+	private int[] CarsNumber;
 
     //------------------------------------------------------------
     // PCSCore
     public PCSCore(String id, AppKickstarter appKickstarter) throws Exception {
 		super(id, appKickstarter);
 		this.pollTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.PollTime"));
-		this.openCloseGateTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.OpenCloseGateTime"));		// for demo only!!!
-   		CarsNumber = 0;
+		//this.openCloseGateTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.OpenCloseGateTime"));		// for demo only!!!
+		CarsNumber = new int[]{30, 30, 30, 30}; //total 50 each
     } // PCSCore
 
 
@@ -34,7 +34,7 @@ public class PCSCore extends AppThread {
     public void run() {
         Thread.currentThread().setName(id);
 		Timer.setTimer(id, mbox, pollTime, PollTimerID);
-		Timer.setTimer(id, mbox, openCloseGateTime, OpenCloseGateTimerID);	// for demo only!!!
+		//Timer.setTimer(id, mbox, openCloseGateTime, OpenCloseGateTimerID);	// for demo only!!!
 		log.info(id + ": starting...");
 
 		gateMBox = appKickstarter.getThread("GateHandler").getMBox();
@@ -49,6 +49,7 @@ public class PCSCore extends AppThread {
 			switch (msg.getType()) {
 			case TimesUp:
 				handleTimesUp(msg);
+				Timer.cancelTimer(id, mbox, pollTime);
 				break;
 
 			case GateOpenReply:
@@ -70,9 +71,39 @@ public class PCSCore extends AppThread {
 				break;
 
 			case CarPassThrough:
-				log.info(id+"Car Pass Through and Updated Display");
-				CarsNumber++;
-				vacancyDispMBox.send(new Msg(id, mbox, Msg.Type.UpdatedDisplay,Integer.toString(CarsNumber)));
+				log.info(msg.getDetails().substring(0,1)+"floor car increase");
+				int floorN = Integer.parseInt(msg.getDetails().substring(0,1));
+				if (floorN!= 0){
+					int num = CarsNumber[floorN-1]+1;
+					if(num<=50) {
+						CarsNumber[floorN-1]++;
+						vacancyDispMBox.send(new Msg(id, mbox, Msg.Type.UpdatedDisplay,
+								msg.getDetails().substring(0,1)+","+CarsNumber[floorN-1]));
+					}else{
+						vacancyDispMBox.send(new Msg(id, mbox, Msg.Type.CannotUpdate,
+								"No Car to Leave"));
+					}
+				}
+				break;
+
+			case CarLeave:
+				log.info(msg.getDetails().substring(0,1)+"floor car decrease");
+				floorN = Integer.parseInt(msg.getDetails().substring(0,1));
+				if (floorN!= 0) {
+					int num = CarsNumber[floorN-1]-1;
+					if (num >= 0) {
+						CarsNumber[floorN-1]--;
+						vacancyDispMBox.send(new Msg(id, mbox, Msg.Type.UpdatedDisplay,
+								msg.getDetails().substring(0, 1) + "," + CarsNumber[floorN-1]));
+					} else {
+						vacancyDispMBox.send(new Msg(id, mbox, Msg.Type.CannotUpdate,
+								"No Place exist"));
+					}
+				}
+				break;
+
+			case CannotUpdate:
+				log.info(msg.getDetails().substring(0,1)+"Cannot updated");
 				break;
 
 			default:
@@ -96,19 +127,20 @@ public class PCSCore extends AppThread {
 	    case PollTimerID:
 		log.info("Poll: " + msg.getDetails());
 		gateMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+		sensorMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
 		Timer.setTimer(id, mbox, pollTime, PollTimerID);
 	        break;
 
-	    case OpenCloseGateTimerID:					// for demo only!!!
-	        if (gateIsClosed) {
-		    log.info(id + ": Open the gate now (for demo only!!!)");
-		    gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
-		} else {
-		    log.info(id + ": Close the gate now (for demo only!!!)");
-		    gateMBox.send(new Msg(id, mbox, Msg.Type.GateCloseRequest, ""));
-		}
-		Timer.setTimer(id, mbox, openCloseGateTime, OpenCloseGateTimerID);
-		break;
+	    //*case OpenCloseGateTimerID:					// for demo only!!!
+	     //   if (gateIsClosed) {
+			//   log.info(id + ": Open the gate now (for demo only!!!)");
+		    //gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
+		//} else {
+		 //   log.info(id + ": Close the gate now (for demo only!!!)");
+		 //   gateMBox.send(new Msg(id, mbox, Msg.Type.GateCloseRequest, ""));
+		//}
+		//Timer.setTimer(id, mbox, openCloseGateTime, OpenCloseGateTimerID);
+		//break;
 
 	    default:
 	        log.severe(id + ": why am I receiving a timeout with timer id " + Timer.getTimesUpMsgTimerId(msg));

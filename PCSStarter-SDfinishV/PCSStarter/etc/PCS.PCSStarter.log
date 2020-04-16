@@ -1,0 +1,19 @@
+200416-00:22:53 [INFO] -- 
+200416-00:22:53 [INFO] -- 
+200416-00:22:53 [INFO] -- ============================================================
+200416-00:22:53 [INFO] -- PCSStarter: Application Starting...
+200416-00:22:53 [FINE] -- PCSStarter: registering timer
+200416-00:22:53 [FINE] -- timer: created!
+200416-00:22:53 [FINE] -- PCSStarter: registering PCSCore
+200416-00:22:53 [FINE] -- PCSCore: created!
+200416-00:22:53 [FINE] -- PCSStarter: registering GateHandler
+200416-00:22:53 [FINE] -- GateHandler: created!
+200416-00:22:53 [FINE] -- PCSStarter: registering SensorHandler
+200416-00:22:53 [FINE] -- SensorHandler: created!
+200416-00:22:53 [FINE] -- PCSStarter: registering VacancyDispHandler
+200416-00:22:53 [FINE] -- VacancyDispHandler: created!
+200416-00:22:53 [INFO] -- timer: starting...
+200416-00:22:53 [INFO] -- VacancyDispHandler: starting...
+200416-00:22:53 [INFO] -- SensorHandler: starting...
+200416-00:22:53 [INFO] -- GateHandler: starting...
+200416-00:22:53 [INFO] -- PCSCore: starting...

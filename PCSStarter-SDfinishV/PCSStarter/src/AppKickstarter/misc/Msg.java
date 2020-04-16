@@ -80,7 +80,7 @@ public class Msg {
      * @see Msg
      */
     public enum Type {
-    /** Terminate the running thread */	Terminate,
+        /** Terminate the running thread */	Terminate,
 	/** Generic error msg */		Error,
 	/** Set a timer */			SetTimer,
 	/** Set a timer */			CancelTimer,
@@ -95,8 +95,10 @@ public class Msg {
 	/** Toggling Gate Emulator AutoOpen */	GateEmulatorAutoOpenToggle,
 	/** Toggling Gate Emulator AutoClose */	GateEmulatorAutoCloseToggle,
 	/** Toggling Gate Emulator AutoPoll */	GateEmulatorAutoPollToggle,
-    /** Displace Updated */  UpdatedDisplay,
-    /** When Cars pass through the sensor */ CarPassThrough,
-    /** */
+        /** Displace Updated */  UpdatedDisplay,
+        /** Displace Cannot Updated */ CannotUpdate,
+        /** When Cars pass through the sensor up*/ CarPassThrough,
+        /** When Cars pass through the sensor down*/ CarLeave,
+        /** */
     } // Type
 } // Msg

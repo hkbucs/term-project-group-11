@@ -12,8 +12,8 @@ public class SensorHandler extends AppThread {
     }
 
     // run
-    public void run() {
-        MBox pcss = appKickstarter.getThread("PCSCore").getMBox();
+    public void run(){
+        MBox pcsCore = appKickstarter.getThread("PCSCore").getMBox();
         log.info(id + ": starting...");
 
         for (boolean quit = false; !quit;) {
@@ -23,7 +23,12 @@ public class SensorHandler extends AppThread {
 
             switch (msg.getType()) {
                 case CarPassThrough:
-                    pcss.send(new Msg(id, mbox, Msg.Type.CarPassThrough, msg.getDetails()));
+                    pcsCore.send(new Msg(id, mbox, Msg.Type.CarPassThrough, msg.getDetails()));
+                    break;
+
+                case CarLeave:
+                    pcsCore.send(new Msg(id,mbox, Msg.Type.CarLeave, msg.getDetails()));
+                    break;
 
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");

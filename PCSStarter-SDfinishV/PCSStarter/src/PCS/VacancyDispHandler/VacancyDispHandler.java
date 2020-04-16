@@ -5,7 +5,7 @@ import AppKickstarter.misc.*;
 
 
 public class VacancyDispHandler extends AppThread {
-
+    String[] msgdetail;
     public VacancyDispHandler(String id, AppKickstarter appKickstarter) throws Exception {
         super(id, appKickstarter);
     }
@@ -32,7 +32,8 @@ public class VacancyDispHandler extends AppThread {
         }
     }
     protected void handleUpdateDisplay(Msg msg) {
-        log.info(id + ": update display -- " + msg.getDetails());
+        msgdetail = msg.getDetails().split(",");
+        log.info(id + ": update display -- "+msgdetail[0]+"floor" + (50-Integer.parseInt(msgdetail[1]))+"places left.");
     }
 
 }
