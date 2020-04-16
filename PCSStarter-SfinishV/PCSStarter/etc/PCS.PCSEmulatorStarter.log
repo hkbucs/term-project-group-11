@@ -1,0 +1,75 @@
+200417-00:19:42 [INFO] -- 
+200417-00:19:42 [INFO] -- 
+200417-00:19:42 [INFO] -- ============================================================
+200417-00:19:42 [INFO] -- PCSStarter: Application Starting...
+200417-00:19:42 [FINE] -- PCSStarter: registering timer
+200417-00:19:42 [FINE] -- timer: created!
+200417-00:19:42 [FINE] -- PCSStarter: registering PCSCore
+200417-00:19:42 [FINE] -- PCSCore: created!
+200417-00:19:42 [FINE] -- PCSStarter: registering GateHandler
+200417-00:19:42 [FINE] -- GateHandler: created!
+200417-00:19:42 [FINE] -- PCSStarter: registering SensorHandler
+200417-00:19:42 [FINE] -- SensorHandler: created!
+200417-00:19:42 [FINE] -- PCSStarter: registering VacancyDispHandler
+200417-00:19:42 [FINE] -- VacancyDispHandler: created!
+200417-00:19:44 [INFO] -- timer: starting...
+200417-00:19:44 [INFO] -- GateHandler: starting...
+200417-00:19:44 [INFO] -- SensorHandler: starting...
+200417-00:19:44 [INFO] -- VacancyDispHandler: starting...
+200417-00:19:44 [INFO] -- PCSCore: starting...
+200417-00:19:48 [FINE] -- SensorHandler: message received: [SensorHandler (CarPassThrough) -- 1-1].
+200417-00:19:48 [FINE] -- PCSCore: message received: [SensorHandler (CarPassThrough) -- 1-1].
+200417-00:19:48 [INFO] -- 1floor car increase
+200417-00:19:48 [FINE] -- VacancyDispHandler: message received: [PCSCore (UpdatedDisplay) -- 1,31].
+200417-00:19:48 [FINE] -- PCSStarter: unregistering VacancyDispHandler
+200417-00:19:48 [INFO] -- VacancyDispHandler: terminating...
+200417-00:19:48 [INFO] -- VacancyDispHandler: 1,31 and update display.
+200417-00:19:50 [FINE] -- GateHandler: message received: [GateHandlerEmulator (GateEmulatorAutoOpenToggle) -- ToggleAutoOpen].
+200417-00:19:50 [FINE] -- GateHandlerEmulator: Auto open change: on --> off
+200417-00:20:01 [FINE] -- SensorHandler: message received: [SensorHandler (CarLeave) -- 2-2].
+200417-00:20:01 [FINE] -- PCSCore: message received: [SensorHandler (CarLeave) -- 2-2].
+200417-00:20:01 [INFO] -- 2floor car decrease
+200417-00:20:01 [FINE] -- VacancyDispHandler: message received: [PCSCore (UpdatedDisplay) -- 2,29].
+200417-00:20:01 [FINE] -- PCSStarter: unregistering VacancyDispHandler
+200417-00:20:01 [INFO] -- VacancyDispHandler: 2,29 and update display.
+200417-00:20:01 [INFO] -- VacancyDispHandler: terminating...
+200417-00:20:05 [FINE] -- SensorHandler: message received: [SensorHandler (CarPassThrough) -- 2-1].
+200417-00:20:05 [FINE] -- PCSCore: message received: [SensorHandler (CarPassThrough) -- 2-1].
+200417-00:20:05 [INFO] -- 2floor car increase
+200417-00:20:05 [FINE] -- VacancyDispHandler: message received: [PCSCore (UpdatedDisplay) -- 2,30].
+200417-00:20:05 [FINE] -- PCSStarter: unregistering VacancyDispHandler
+200417-00:20:05 [INFO] -- VacancyDispHandler: 2,30 and update display.
+200417-00:20:05 [INFO] -- VacancyDispHandler: terminating...
+200417-00:20:07 [FINE] -- SensorHandler: message received: [SensorHandler (CarPassThrough) -- 1-1].
+200417-00:20:07 [FINE] -- PCSCore: message received: [SensorHandler (CarPassThrough) -- 1-1].
+200417-00:20:07 [INFO] -- 1floor car increase
+200417-00:20:07 [FINE] -- VacancyDispHandler: message received: [PCSCore (UpdatedDisplay) -- 1,32].
+200417-00:20:07 [FINE] -- PCSStarter: unregistering VacancyDispHandler
+200417-00:20:07 [INFO] -- VacancyDispHandler: terminating...
+200417-00:20:07 [INFO] -- VacancyDispHandler: 1,32 and update display.
+200417-00:20:07 [FINE] -- SensorHandler: message received: [SensorHandler (CarLeave) -- 1-2].
+200417-00:20:07 [FINE] -- PCSCore: message received: [SensorHandler (CarLeave) -- 1-2].
+200417-00:20:07 [INFO] -- 1floor car decrease
+200417-00:20:07 [FINE] -- VacancyDispHandler: message received: [PCSCore (UpdatedDisplay) -- 1,31].
+200417-00:20:07 [FINE] -- PCSStarter: unregistering VacancyDispHandler
+200417-00:20:07 [INFO] -- VacancyDispHandler: 1,31 and update display.
+200417-00:20:07 [INFO] -- VacancyDispHandler: terminating...
+200417-00:20:10 [INFO] -- 
+200417-00:20:10 [INFO] -- 
+200417-00:20:10 [INFO] -- ============================================================
+200417-00:20:10 [INFO] -- PCSStarter: Application Stopping...
+200417-00:20:10 [FINE] -- PCSCore: message received: [PCSStarter (Terminate) -- Terminate now!].
+200417-00:20:10 [INFO] -- timer: received terminate!
+200417-00:20:10 [FINE] -- VacancyDispHandler: message received: [PCSStarter (Terminate) -- Terminate now!].
+200417-00:20:10 [FINE] -- GateHandler: message received: [PCSStarter (Terminate) -- Terminate now!].
+200417-00:20:10 [FINE] -- PCSStarter: unregistering timer
+200417-00:20:10 [INFO] -- timer: terminating...
+200417-00:20:10 [FINE] -- SensorHandler: message received: [PCSStarter (Terminate) -- Terminate now!].
+200417-00:20:10 [WARNING] -- SensorHandler: unknown message type: [PCSStarter (Terminate) -- Terminate now!]
+200417-00:20:10 [WARNING] -- VacancyDispHandler: unknown message type: [PCSStarter (Terminate) -- Terminate now!]
+200417-00:20:10 [FINE] -- PCSStarter: unregistering GateHandler
+200417-00:20:10 [FINE] -- PCSStarter: unregistering VacancyDispHandler
+200417-00:20:10 [INFO] -- GateHandler: terminating...
+200417-00:20:10 [INFO] -- VacancyDispHandler: terminating...
+200417-00:20:10 [FINE] -- PCSStarter: unregistering PCSCore
+200417-00:20:10 [INFO] -- PCSCore: terminating...
