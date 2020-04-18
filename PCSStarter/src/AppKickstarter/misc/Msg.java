@@ -111,6 +111,8 @@ public class Msg {
         /** Car passes through Sensor Emulator */ CarPassThrough,
         /** Car leaves Sensor Emulator  */ CarLeave,
         /** Update display info on Vacancy Display Emulator */ UpdateDisplay,
+        RingingAlarm,
+        WrongTicketNumber,
 
     } // Type
 } // Msg
