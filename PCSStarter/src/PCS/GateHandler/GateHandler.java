@@ -206,7 +206,8 @@ public class GateHandler extends AppThread {
     //------------------------------------------------------------
     // sendGateOpenSignal
     protected void sendGateOpenSignal() {
-	// fixme: send gate open signal to hardware
+	// Send gate open signal to hardware
+		pcsCore.send(new Msg(id, mbox, Msg.Type.OpenSignal, id + ": sending gate open signal to hardware"));
 	log.info(id + ": sending gate open signal to hardware.");
     } // sendGateOpenSignal
 
@@ -214,7 +215,9 @@ public class GateHandler extends AppThread {
     //------------------------------------------------------------
     // sendGateCloseSignal
     protected void sendGateCloseSignal() {
-	// fixme: send gate close signal to hardware
+	// Send gate close signal to hardware
+		pcsCore.send(new Msg(id, mbox, Msg.Type.CloseSignal, id + ": sending gate close signal to hardware"));
+
 	log.info(id + ": sending gate close signal to hardware.");
     } // sendGateCloseSignal
 
@@ -222,8 +225,9 @@ public class GateHandler extends AppThread {
     //------------------------------------------------------------
     // sendPollReq
     protected void sendPollReq() {
-	// fixme: send gate poll request to hardware
-	log.info(id + ": poll request received");
+	// Send gate poll request to hardwarexme:
+		pcsCore.send(new Msg(id, mbox, Msg.Type.sendPollSignal, id + ": sending gate close signal to hardware"));
+		log.info(id + ": poll request received");
     } // sendPollReq
 
 

@@ -36,6 +36,10 @@ public class PayMachineHandler extends AppThread {
                     handleTicketRemove();
                     break;
 
+                case PrintTicketInfo:
+                    handlePrintTicketInfo();
+                    break;
+
                 case Poll:
                     pcsCore.send(new Msg(id, mbox, Msg.Type.PollAck, id + " is up!"));
                     break;
@@ -73,4 +77,10 @@ public class PayMachineHandler extends AppThread {
     protected void handleTicketRemove() {
         log.info(id + ": ticket removed");
     } // handleCardInsert
+
+    protected void handlePrintTicketInfo() {
+        log.info(id + ": ticket information");
+    } // handlePrintTicketInfo
+
+
 }

@@ -3,17 +3,24 @@ package PCS.PCSCore;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
+import PCS.PayMachineHandler.PayMachineHandler;
+import PCS.Ticket;
+
+import java.util.Hashtable;
 
 
 //======================================================================
 // PCSCore
 public class PCSCore extends AppThread {
     private MBox gateMBox;
+	private MBox paymentMBox;
+
     private final int pollTime;
     private final int PollTimerID=1;
     private final int openCloseGateTime;		// for demo only!!!
     private final int OpenCloseGateTimerID=2;		// for demo only!!!
-    private boolean gateIsClosed = true;		// for demo only!!!
+    private boolean gateIsClosed = true;		// for demo only!!
+	private Hashtable<Integer, Ticket> Tickets;
 
 
     //------------------------------------------------------------
@@ -22,6 +29,7 @@ public class PCSCore extends AppThread {
 	super(id, appKickstarter);
 	this.pollTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.PollTime"));
 	this.openCloseGateTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.OpenCloseGateTime"));		// for demo only!!!
+		this.Tickets = new Hashtable<Integer, Ticket>();
     } // PCSCore
 
 
@@ -34,6 +42,7 @@ public class PCSCore extends AppThread {
 	log.info(id + ": starting...");
 
 	gateMBox = appKickstarter.getThread("GateHandler").getMBox();
+	paymentMBox = appKickstarter.getThread("id:PayMachineHandler").getMBox();
 
 	for (boolean quit = false; !quit;) {
 	    Msg msg = mbox.receive();
@@ -54,6 +63,23 @@ public class PCSCore extends AppThread {
 		    log.info(id + ": Gate is closed.");
 		    gateIsClosed = true;
 		    break;
+
+		    case OpenSignal:
+				log.info(id + ": sending gate open signal to hardware.");
+				break;
+
+			case CloseSignal:
+				log.info(id + ": sending gate close signal to hardware.");
+				break;
+
+			case sendPollSignal:
+				log.info(id + ": poll request received.");
+				break;
+
+			case PayMachineInsertTicket:
+				log.info(id + ": ticket is inserted.");
+				paymentMBox.send(new Msg(id, mbox, Msg.Type.PrintTicketInfo, ""));
+				break;
 
 		case PollAck:
 		    log.info("PollAck: " + msg.getDetails());
