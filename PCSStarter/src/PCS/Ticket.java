@@ -21,13 +21,28 @@ public class Ticket {
         this.exitTime = null;
         this.paymentTime = null;
         this.parkingFee = 0;
-        this.finishPayment = true;
+        this.finishPayment = false;
         this.inside = true;
     }
 
-    public boolean finishPayment(){
+    public void finishPayment(){
+        finishPayment = true;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public void leave(){
+        inside = false;
+    }
+
+    public boolean getFinishPayment(){
         return finishPayment;
     }
 
-    public int getId(){return id;}
+    public boolean getInside(){
+        return inside;
+    }
+
 }
