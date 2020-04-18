@@ -17,14 +17,11 @@ public class CollectorEmulator extends CollectorHandler {
     private final String id;
     private Stage myStage;
     private CollectorEmulatorController collectorEmulatorController;
-    private boolean autoPoll;
-
 
     public CollectorEmulator(String id, PCSStarter pcsStarter) {
         super(id, pcsStarter);
         this.pcsStarter = pcsStarter;
         this.id = id;
-        this.autoPoll = true;
     }
 
     public void start() throws Exception {

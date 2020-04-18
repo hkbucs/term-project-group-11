@@ -17,9 +17,7 @@ public class DispatcherEmulatorController {
     private Logger log;
     private DispatcherEmulator dispatcherEmulator;
     private MBox dispatcherEmulatorMBox;
-    public TextArea ticketId;
     public TextArea dispatcherTextArea;
-    public Button autoPollButton;
     private int lineNo = 0;
 
     public void initialize(String id, AppKickstarter appKickstarter,

@@ -69,6 +69,7 @@ public class CollectorHandler extends AppThread {
 
     protected void adminOpen() {
         log.info(id + ": Admin Pressed the Button");
+        pcsCore.send(new Msg(id, mbox, Msg.Type.AdminOpen, ""));
         switch (status)
         {
             case RingingAlarm:

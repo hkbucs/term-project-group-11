@@ -23,7 +23,7 @@ public class PCSCore extends AppThread {
     private final int openCloseGateTime;        // for demo only!!!
     private final int OpenCloseGateTimerID = 2;        // for demo only!!!
     private boolean gateIsClosed = true;        // for demo only!!
-    private ArrayList<Ticket> tickets;
+    private ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 
 
     //------------------------------------------------------------
@@ -32,7 +32,6 @@ public class PCSCore extends AppThread {
         super(id, appKickstarter);
         this.pollTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.PollTime"));
         this.openCloseGateTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.OpenCloseGateTime"));        // for demo only!!!
-        this.tickets = new ArrayList<Ticket>();
     } // PCSCore
 
 
@@ -88,12 +87,25 @@ public class PCSCore extends AppThread {
 
                 case DispatcherPrintTicket:
                     log.info(id + ": ticket is printed.");
-                    int new_id = getNewTicket();
-                    dispatcherMBox.send(new Msg(id, mbox, Msg.Type.DispatcherGetNewTicketID, Integer.toString(new_id)));
+                    int length = tickets.size();
+                    Ticket new_ticket = new Ticket(length);
+                    tickets.add(new_ticket);
+                    log.info(id + ": ticket num is " + length);
+                    dispatcherMBox.send(new Msg(id, mbox, Msg.Type.DispatcherGetNewTicketID, Integer.toString(length)));
                     break;
 
                 case DispatcherTakeTicket:
                     log.info(id + ": ticket was taken.");
+                    gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
+                    break;
+
+                case CollectorInsertTicket:
+                    log.info(id + ": ticket was taken.");
+                    checkCollectedTicket(msg.getDetails());
+                    break;
+
+                case AdminOpen:
+                    log.info(id + ": admin force open.");
                     gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
                     break;
 
@@ -144,11 +156,37 @@ public class PCSCore extends AppThread {
         }
     } // handleTimesUp
 
-    private int getNewTicket(){
-        int length = tickets.size();
-        Ticket new_ticket = new Ticket(length);
-        tickets.add(new_ticket);
-        return new_ticket.getId();
+
+    private void checkCollectedTicket(String tID){
+        int ticketID = Integer.parseInt(tID);
+        int count = -1;
+        for (int i = 0; i < tickets.size(); i++)
+        {
+            if (tickets.get(i).getId() == ticketID)
+            {
+                count = i;
+                break;
+            }
+        }
+        if (count == -1){
+            log.info(id + ": Ticket number is wrong.");
+            collectorMBox.send(new Msg(id, mbox, Msg.Type.WrongTicketNumber, ""));
+            return;
+        }
+        else if (tickets.get(count).getFinishPayment())
+        {
+            log.info(id + ": Ticket is valid.");
+            collectorMBox.send(new Msg(id, mbox, Msg.Type.PAck, ""));
+            log.info(id + ": Open Gate.");
+            gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
+            log.info(id + ": ticket leave.");
+            tickets.get(count).leave();
+        }
+        else
+        {
+            log.info(id + ": Ticket is not leaving.");
+            collectorMBox.send(new Msg(id, mbox, Msg.Type.NAck, ""));
+        }
     }
 
 } // PCSCore

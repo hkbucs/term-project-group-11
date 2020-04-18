@@ -17,8 +17,7 @@ public class CollectorEmulatorController {
     private CollectorEmulator collectorEmulator;
     private MBox collectorHandlerMBox;
     public TextArea ticketId;
-    public TextArea gateTextArea;
-    public Button autoPollButton;
+    public TextArea collectorTextArea;
     private int lineNo = 0;
 
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, CollectorEmulator collectorEmulator) {
@@ -52,6 +51,6 @@ public class CollectorEmulatorController {
     }
 
     public void appendTextArea(String status) {
-        Platform.runLater(() -> gateTextArea.appendText(String.format("[%04d] %s\n", ++lineNo, status)));
+        Platform.runLater(() -> collectorTextArea.appendText(String.format("[%04d] %s\n", ++lineNo, status)));
     }
 }

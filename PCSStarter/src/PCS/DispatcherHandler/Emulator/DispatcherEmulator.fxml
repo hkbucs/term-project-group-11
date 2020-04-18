@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PCS.CollectorHandler.Emulator.CollectorEmulatorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PCS.DispatcherHandler.Emulator.DispatcherEmulatorController">
     <children>
 
         <AnchorPane prefHeight="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
@@ -27,7 +27,7 @@
 
         <AnchorPane layoutX="20.0" layoutY="105.0" prefHeight="282.0" prefWidth="380.0">
             <children>
-                <TextArea fx:id="collectorTextArea" layoutY="36.0" prefHeight="302.0" prefWidth="380.0" />
+                <TextArea fx:id="dispatcherTextArea" layoutY="36.0" prefHeight="302.0" prefWidth="380.0" />
             </children>
         </AnchorPane>
 
