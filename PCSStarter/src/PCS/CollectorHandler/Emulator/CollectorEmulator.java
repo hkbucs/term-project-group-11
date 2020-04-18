@@ -1,10 +1,8 @@
 package PCS.CollectorHandler.Emulator;
 
-import PCS.DispatcherHandler.Emulator.DispatcherEmulator;
-import PCS.DispatcherHandler.Emulator.DispatcherEmulatorController;
 import PCS.PCSStarter;
 import PCS.CollectorHandler.CollectorHandler;
-import AppKickstarter.misc.Msg;
+import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -46,40 +44,50 @@ public class CollectorEmulator extends CollectorHandler {
         myStage.show();
     }
 
-    protected void printTicket(Msg msg) {
-        log.info(id + ": " + msg.getDetails());
-        switch (msg.getDetails()) {
-            case "print":
-                reloadStage("CollectorEmulatorReceipt.fxml");
-                break;
-            case "close":
-                reloadStage("CollectorEmulator.fxml");
-                break;
-            default:
-                log.severe(id + ": UnKnown Info" + msg.getDetails());
-                break;
+    protected final boolean processMsg(Msg msg) {
+        boolean quit = false;
+        quit = super.processMsg(msg);
+        return quit;
+    }
+
+    protected void insertedTicket(String tID) {
+        logFine("OK for your ticket");
+    }
+
+    protected void adminOpen() {
+        logFine("Admin has Pressed");
+    }
+
+    protected void alarmSignal(boolean alarmSignal) {
+        if(alarmSignal){
+            logWarning("Alarm Ringing");
         }
     }
 
-    private void reloadStage(String fxmlFName) {
-        CollectorEmulator collectorEmulator = this;
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    log.info(id + ": loading fxml: " + fxmlFName);
-                    Parent root;
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(DispatcherEmulator.class.getResource(fxmlFName));
-                    root = loader.load();
-                    collectorEmulatorController = loader.getController();
-                    collectorEmulatorController.initialize(id, pcsStarter, log, collectorEmulator);
-                    myStage.setScene(new Scene(root, 420, 470));
-                } catch (Exception e) {
-                    log.severe(id + ": failed to load " + fxmlFName);
-                    e.printStackTrace();
-                }
-            }
-        });
+    protected void wrongTicket(){
+        logWarning("Wrong Ticket");
     }
+
+    private final void logFine(String logMsg) {
+        collectorEmulatorController.appendTextArea("[FINE]: " + logMsg);
+        log.fine(id + ": " + logMsg);
+    } // logFine
+    //------------------------------------------------------------
+    // logInfo
+    private final void logInfo(String logMsg) {
+        collectorEmulatorController.appendTextArea("[INFO]: " + logMsg);
+        log.info(id + ": " + logMsg);
+    } // logInfo
+    //------------------------------------------------------------
+    // logWarning
+    private final void logWarning(String logMsg) {
+        collectorEmulatorController.appendTextArea("[WARNING]: " + logMsg);
+        log.warning(id + ": " + logMsg);
+    } // logWarning
+    //------------------------------------------------------------
+    // logSevere
+    private final void logSevere(String logMsg) {
+        collectorEmulatorController.appendTextArea("[SEVERE]: " + logMsg);
+        log.severe(id + ": " + logMsg);
+    } // logSevere
 }

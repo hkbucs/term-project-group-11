@@ -44,40 +44,44 @@ public class DispatcherEmulator extends DispatcherHandler {
         myStage.show();
     }
 
-    protected void printTicket(Msg msg) {
-        log.info(id + ": " + msg.getDetails());
-        switch (msg.getDetails()) {
-            case "print":
-                reloadStage("DispatcherEmulatorReceipt.fxml");
-                break;
-            case "close":
-                reloadStage("DispatcherEmulator.fxml");
-                break;
-            default:
-                log.severe(id + ": UnKnown Info" + msg.getDetails());
-                break;
-        }
+    protected final boolean processMsg(Msg msg) {
+        boolean quit = false;
+        quit = super.processMsg(msg);
+        return quit;
     }
 
-    private void reloadStage(String fxmlFName) {
-        DispatcherEmulator dispatcherEmulator = this;
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    log.info(id + ": loading fxml: " + fxmlFName);
-                    Parent root;
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(DispatcherEmulator.class.getResource(fxmlFName));
-                    root = loader.load();
-                    dispatcherEmulatorController = loader.getController();
-                    dispatcherEmulatorController.initialize(id, pcsStarter, log, dispatcherEmulator);
-                    myStage.setScene(new Scene(root, 420, 470));
-                } catch (Exception e) {
-                    log.severe(id + ": failed to load " + fxmlFName);
-                    e.printStackTrace();
-                }
-            }
-        });
+    protected void printTicket() {
+        logFine("Ticket was printed");
     }
+
+    protected void takeTicket() {
+        logFine("Ticket was Taken");
+    }
+
+    protected void dealNewTicketID(String tID) {
+        logFine("New Ticket With Number " + tID);
+    }
+
+    private final void logFine(String logMsg) {
+        dispatcherEmulatorController.appendTextArea("[FINE]: " + logMsg);
+        log.fine(id + ": " + logMsg);
+    } // logFine
+    //------------------------------------------------------------
+    // logInfo
+    private final void logInfo(String logMsg) {
+        dispatcherEmulatorController.appendTextArea("[INFO]: " + logMsg);
+        log.info(id + ": " + logMsg);
+    } // logInfo
+    //------------------------------------------------------------
+    // logWarning
+    private final void logWarning(String logMsg) {
+        dispatcherEmulatorController.appendTextArea("[WARNING]: " + logMsg);
+        log.warning(id + ": " + logMsg);
+    } // logWarning
+    //------------------------------------------------------------
+    // logSevere
+    private final void logSevere(String logMsg) {
+        dispatcherEmulatorController.appendTextArea("[SEVERE]: " + logMsg);
+        log.severe(id + ": " + logMsg);
+    } // logSevere
 }

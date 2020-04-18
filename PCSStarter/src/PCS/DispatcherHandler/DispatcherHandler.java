@@ -2,41 +2,53 @@ package PCS.DispatcherHandler;
 
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
+import PCS.CollectorHandler.CollectorHandler;
 
 
 public class DispatcherHandler extends AppThread {
+    protected final MBox pcsCore;
 
     public DispatcherHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
+        pcsCore = appKickstarter.getThread("PCSCore").getMBox();
     }
 
     public void run() {
-        MBox pcsCore = appKickstarter.getThread("PCSCore").getMBox();
+        Thread.currentThread().setName(id);
         log.info(id + ": starting...");
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
             log.fine(id + ": message received: [" + msg + "].");
-            switch (msg.getType()) {
-                case DispatcherPrintTicket:
-                    pcsCore.send(new Msg(id, mbox, Msg.Type.DispatcherPrintTicket, msg.getDetails()));
-                    printTicket();
-                    break;
-                case DispatcherTakeTicket:
-                    pcsCore.send(new Msg(id, mbox, Msg.Type.DispatcherTakeTicket, msg.getDetails()));
-                    takeTicket();
-                    break;
-                case Poll:
-                    pcsCore.send(new Msg(id, mbox, Msg.Type.PollAck, id + " is up!"));
-                    break;
-                case Terminate:
-                    quit = true;
-                    break;
-                default:
-                    log.warning(id + ": unknown message type: [" + msg + "]");
-            }
+            quit = processMsg(msg);
         }
         appKickstarter.unregThread(this);
         log.info(id + ": terminating...");
+    }
+
+    protected boolean processMsg(Msg msg) {
+        boolean quit = false;
+        switch (msg.getType()) {
+            case DispatcherPrintTicket:
+                pcsCore.send(new Msg(id, mbox, Msg.Type.DispatcherPrintTicket, msg.getDetails()));
+                printTicket();
+                break;
+            case DispatcherTakeTicket:
+                pcsCore.send(new Msg(id, mbox, Msg.Type.DispatcherTakeTicket, msg.getDetails()));
+                takeTicket();
+                break;
+            case DispatcherGetNewTicketID:
+                dealNewTicketID(msg.getDetails());
+                break;
+            case Poll:
+                pcsCore.send(new Msg(id, mbox, Msg.Type.PollAck, id + " is up!"));
+                break;
+            case Terminate:
+                quit = true;
+                break;
+            default:
+                log.warning(id + ": unknown message type: [" + msg + "]");
+        }
+        return quit;
     }
 
     //Dispatcher prepares the ticket
@@ -47,5 +59,9 @@ public class DispatcherHandler extends AppThread {
     //Driver collects the ticket from the dispatcher, and enters the parking lot
     protected void takeTicket() {
         log.info(id + ": Ticket was taken and door opened");
+    }
+
+    protected void dealNewTicketID(String tID){
+        log.info(id + ": New Ticket With Number " + tID);
     }
 }

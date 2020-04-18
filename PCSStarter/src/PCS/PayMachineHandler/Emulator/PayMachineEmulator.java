@@ -40,13 +40,33 @@ public class PayMachineEmulator extends PayMachineHandler {
         payMachineEmulatorController = loader.getController();
         payMachineEmulatorController.initialize(id, pcsStarter, log, this);
         myStage.initStyle(StageStyle.DECORATED);
-        myStage.setScene(new Scene(root, 420, 470));
+        myStage.setScene(new Scene(root, 350, 470));
         myStage.setTitle("Pay Machine Emulator");
         myStage.setResizable(false);
         myStage.setOnCloseRequest((WindowEvent event) -> {
             pcsStarter.stopApp();
             Platform.exit();
         });
+
         myStage.show();
     }
-}
+        protected void handleTicketInsert() {
+            super.handleTicketInsert();
+            payMachineEmulatorController.appendTextArea("Ticket Inserted");
+            payMachineEmulatorController.updateTicketStatus("Ticket Inserted");
+        } // handleCardInsert
+
+        /**
+         * This method is used to show card removed information in text area and update
+         * card statues after Card Removed
+         */
+
+        // ------------------------------------------------------------
+        // handleCardRemove
+        protected void handleTicketRemove() {
+            super.handleTicketRemove();
+            payMachineEmulatorController.appendTextArea("Ticket Removed");
+            payMachineEmulatorController.updateTicketStatus("Ticket Reader Empty");
+        } // handleCardRemove
+    } // CardReaderEmulator
+
