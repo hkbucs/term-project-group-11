@@ -95,5 +95,17 @@ public class Msg {
 	/** Toggling Gate Emulator AutoOpen */	GateEmulatorAutoOpenToggle,
 	/** Toggling Gate Emulator AutoClose */	GateEmulatorAutoCloseToggle,
 	/** Toggling Gate Emulator AutoPoll */	GateEmulatorAutoPollToggle,
+        /** Insert a ticket to Collector Emulator */ CollectorInsertTicket,
+        /** Admin press the open gate button */ AdminOpen,
+        /** Positive Acknowledgement */ PAck,
+        /** Negative Acknowledgement */ NAck,
+        /** Print the ticket from Dispatcher Emulator */ DispatcherPrintTicket,
+        /** Take the ticket from Dispatcher Emulator */ DispatcherTakeTicket,
+        /** Insert a ticket to PayMachine Emulator */ PayMachineInsertTicket,
+        /** Remove a ticket to PayMachine Emulator */ PayMachineRemoveTicket,
+        /** Car passes through Sensor Emulator */ CarPassThrough,
+        /** Car leaves Sensor Emulator  */ CarLeave,
+        /** Update display info on Vacancy Display Emulator */ UpdateDisplay,
+
     } // Type
 } // Msg
