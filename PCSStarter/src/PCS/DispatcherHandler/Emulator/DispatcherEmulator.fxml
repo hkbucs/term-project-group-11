@@ -2,22 +2,36 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="470.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PCS.DispatcherHandler.Emulator.DispatcherEmulatorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PCS.CollectorHandler.Emulator.CollectorEmulatorController">
     <children>
-        <Button layoutX="58.0" layoutY="269.0" mnemonicParsing="false" text="Give Me A Recipt">
-            <font>
-                <Font size="34.0" />
-            </font>
-        </Button>
-        <Button layoutX="64.0" layoutY="360.0" mnemonicParsing="false" text="Take the Recipt">
-            <font>
-                <Font size="36.0" />
-            </font>
-        </Button>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#384654" height="102.0" layoutX="35.0" layoutY="43.0" stroke="BLACK" strokeType="INSIDE" width="351.0" />
+
+        <AnchorPane prefHeight="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <Button layoutX="-4.0" layoutY="13.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="39.0" prefWidth="380.0" text="Give Me a Ticket">
+                    <font>
+                        <Font size="18.0" />
+                    </font></Button>
+            </children>
+        </AnchorPane>
+
+        <AnchorPane prefHeight="30.0" prefWidth="380.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0">
+            <children>
+                <Button layoutX="-3.0" layoutY="23.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="39.0" prefWidth="380.0" text="Take the Ticket">
+                    <font>
+                        <Font size="18.0" />
+                    </font></Button>
+            </children>
+        </AnchorPane>
+
+        <AnchorPane layoutX="20.0" layoutY="105.0" prefHeight="282.0" prefWidth="380.0">
+            <children>
+                <TextArea fx:id="collectorTextArea" layoutY="36.0" prefHeight="302.0" prefWidth="380.0" />
+            </children>
+        </AnchorPane>
+
+        <AnchorPane layoutX="17.0" layoutY="404.0" prefHeight="45.0" prefWidth="387.0" />
+
     </children>
 </AnchorPane>

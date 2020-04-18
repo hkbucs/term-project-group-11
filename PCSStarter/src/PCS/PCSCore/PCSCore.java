@@ -6,30 +6,33 @@ import AppKickstarter.timer.Timer;
 import PCS.PayMachineHandler.PayMachineHandler;
 import PCS.Ticket;
 
-import java.util.Hashtable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 //======================================================================
 // PCSCore
 public class PCSCore extends AppThread {
     private MBox gateMBox;
-	private MBox paymentMBox;
+    private MBox paymentMBox;
+    private MBox dispatcherMBox;
+    private MBox collectorMBox;
 
     private final int pollTime;
-    private final int PollTimerID=1;
-    private final int openCloseGateTime;		// for demo only!!!
-    private final int OpenCloseGateTimerID=2;		// for demo only!!!
-    private boolean gateIsClosed = true;		// for demo only!!
-	private Hashtable<Integer, Ticket> Tickets;
+    private final int PollTimerID = 1;
+    private final int openCloseGateTime;        // for demo only!!!
+    private final int OpenCloseGateTimerID = 2;        // for demo only!!!
+    private boolean gateIsClosed = true;        // for demo only!!
+    private ArrayList<Ticket> tickets;
 
 
     //------------------------------------------------------------
     // PCSCore
     public PCSCore(String id, AppKickstarter appKickstarter) throws Exception {
-	super(id, appKickstarter);
-	this.pollTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.PollTime"));
-	this.openCloseGateTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.OpenCloseGateTime"));		// for demo only!!!
-		this.Tickets = new Hashtable<Integer, Ticket>();
+        super(id, appKickstarter);
+        this.pollTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.PollTime"));
+        this.openCloseGateTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.OpenCloseGateTime"));        // for demo only!!!
+        this.tickets = new ArrayList<Ticket>();
     } // PCSCore
 
 
@@ -41,8 +44,10 @@ public class PCSCore extends AppThread {
         Timer.setTimer(id, mbox, openCloseGateTime, OpenCloseGateTimerID);    // for demo only!!!
         log.info(id + ": starting...");
 
-	gateMBox = appKickstarter.getThread("GateHandler").getMBox();
-	paymentMBox = appKickstarter.getThread("id:PayMachineHandler").getMBox();
+        gateMBox = appKickstarter.getThread("GateHandler").getMBox();
+        dispatcherMBox = appKickstarter.getThread("DispatcherHandler").getMBox();
+        collectorMBox = appKickstarter.getThread("CollectorHandler").getMBox();
+        paymentMBox = appKickstarter.getThread("id:PayMachineHandler").getMBox();
 
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
@@ -64,27 +69,37 @@ public class PCSCore extends AppThread {
                     gateIsClosed = true;
                     break;
 
+                case OpenSignal:
+                    log.info(id + ": sending gate open signal to hardware.");
+                    break;
 
-		    case OpenSignal:
-				log.info(id + ": sending gate open signal to hardware.");
-				break;
+                case CloseSignal:
+                    log.info(id + ": sending gate close signal to hardware.");
+                    break;
 
-			case CloseSignal:
-				log.info(id + ": sending gate close signal to hardware.");
-				break;
+                case sendPollSignal:
+                    log.info(id + ": poll request received.");
+                    break;
 
-			case sendPollSignal:
-				log.info(id + ": poll request received.");
-				break;
+                case PayMachineInsertTicket:
+                    log.info(id + ": ticket is inserted.");
+                    paymentMBox.send(new Msg(id, mbox, Msg.Type.PrintTicketInfo, ""));
+                    break;
 
-			case PayMachineInsertTicket:
-				log.info(id + ": ticket is inserted.");
-				paymentMBox.send(new Msg(id, mbox, Msg.Type.PrintTicketInfo, ""));
-				break;
+                case DispatcherPrintTicket:
+                    log.info(id + ": ticket is printed.");
+                    int new_id = getNewTicket();
+                    dispatcherMBox.send(new Msg(id, mbox, Msg.Type.DispatcherGetNewTicketID, Integer.toString(new_id)));
+                    break;
 
-		case PollAck:
-		    log.info("PollAck: " + msg.getDetails());
-		    break;
+                case DispatcherTakeTicket:
+                    log.info(id + ": ticket was taken.");
+                    gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
+                    break;
+
+                case PollAck:
+                    log.info("PollAck: " + msg.getDetails());
+                    break;
 
                 case Terminate:
                     quit = true;
@@ -128,4 +143,12 @@ public class PCSCore extends AppThread {
                 break;
         }
     } // handleTimesUp
+
+    private int getNewTicket(){
+        int length = tickets.size();
+        Ticket new_ticket = new Ticket(length);
+        tickets.add(new_ticket);
+        return new_ticket.getId();
+    }
+
 } // PCSCore

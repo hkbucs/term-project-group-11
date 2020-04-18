@@ -5,7 +5,10 @@ import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import java.util.logging.Logger;
 
 public class DispatcherEmulatorController {
@@ -14,6 +17,10 @@ public class DispatcherEmulatorController {
     private Logger log;
     private DispatcherEmulator dispatcherEmulator;
     private MBox dispatcherEmulatorMBox;
+    public TextArea ticketId;
+    public TextArea dispatcherTextArea;
+    public Button autoPollButton;
+    private int lineNo = 0;
 
     public void initialize(String id, AppKickstarter appKickstarter,
                            Logger log, DispatcherEmulator dispatcherEmulator) {
@@ -26,7 +33,22 @@ public class DispatcherEmulatorController {
 
     public void buttonPressed(ActionEvent actionEvent) {
         Button btn = (Button) actionEvent.getSource();
-        String btnTxt = btn.getText();
-        dispatcherEmulatorMBox.send(new Msg(id, dispatcherEmulatorMBox, Msg.Type.DispatcherPrintTicket, btnTxt));
+        switch (btn.getText()) {
+            case "Give Me a Ticket":
+                appendTextArea("Ticket Printed");
+                dispatcherEmulatorMBox.send(new Msg(id, null, Msg.Type.DispatcherPrintTicket, ""));
+                break;
+            case "Take the Ticket":
+                appendTextArea("Ticket Taken");
+                dispatcherEmulatorMBox.send(new Msg(id, null, Msg.Type.DispatcherTakeTicket, ""));
+                break;
+            default:
+                log.warning(id + ": unknown button: [" + btn.getText() + "]");
+                break;
+        }
+    }
+
+    public void appendTextArea(String status) {
+        Platform.runLater(() -> dispatcherTextArea.appendText(String.format("[%04d] %s\n", ++lineNo, status)));
     }
 }

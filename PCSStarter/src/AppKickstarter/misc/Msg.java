@@ -113,6 +113,6 @@ public class Msg {
         /** Update display info on Vacancy Display Emulator */ UpdateDisplay,
         RingingAlarm,
         WrongTicketNumber,
-
+        DispatcherGetNewTicketID,
     } // Type
 } // Msg
