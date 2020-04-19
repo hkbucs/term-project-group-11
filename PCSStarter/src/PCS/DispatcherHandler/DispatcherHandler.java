@@ -38,8 +38,8 @@ public class DispatcherHandler extends AppThread {
     /**
      * Function for message process
      *
-     * @param msg message from msg queue
-     * @return
+     * @param msg   message from msg queue
+     * @return      the flag of quit
      */
     protected boolean processMsg(Msg msg) {
         boolean quit = false;
@@ -86,7 +86,7 @@ public class DispatcherHandler extends AppThread {
     /**
      * Function for new ticket number comes to the handler
      *
-     * @pram ticketNumber ticket number
+     * @param ticketNumber ticket number
      */
     protected void handleNewTicket(String ticketNumber) {
         log.info(id + ": New Ticket With Number " + ticketNumber);
