@@ -102,17 +102,19 @@ public class Msg {
         /** Admin press the open gate button */ AdminOpen,
         /** Positive Acknowledgement */ PAck,
         /** Negative Acknowledgement */ NAck,
-        /** Print the ticket from Dispatcher Emulator */ DispatcherPrintTicket,
+        /** Create a ticket from Dispatcher Emulator */ DispatcherCreateTicket,
+        /** Get the ticket number for Dispatcher Emulator */DispatcherGetNewTicketNumber,
         /** Take the ticket from Dispatcher Emulator */ DispatcherTakeTicket,
         /** Insert a ticket to PayMachine Emulator */ PayMachineInsertTicket,
         /** Remove a ticket to PayMachine Emulator */ PayMachineRemoveTicket,
         /** Do the payment on PayMachine */  PayMachinePayment,
         /** Print the information of ticket */ PrintTicketInfo,
+        /** Pay Machine Error */ PayMachineError,
         /** Car passes through Sensor Emulator */ CarPassThrough,
         /** Car leaves Sensor Emulator  */ CarLeave,
         /** Update display info on Vacancy Display Emulator */ UpdateDisplay,
+        /** Pay Machine Error */CollectorError,
         RingingAlarm,
-        WrongTicketNumber,
-        DispatcherGetNewTicketID,
+
     } // Type
 } // Msg

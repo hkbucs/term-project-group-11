@@ -42,7 +42,7 @@ public class CollectorHandler extends AppThread {
             case NAck:
                 nack();
                 break;
-            case WrongTicketNumber:
+            case CollectorError:
                 wrongTicket();
                 break;
             case Terminate:

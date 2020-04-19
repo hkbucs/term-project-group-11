@@ -37,12 +37,17 @@ public class PayMachineHandler extends AppThread {
                     break;
 
                 case PrintTicketInfo:
-                    handlePrintTicketInfo(msg.getDetails().toString());
+                    handlePrintTicketInfo(msg.getDetails());
                     break;
 
                 case PayMachinePayment:
-                    log.info(id + ": Handling payment for: " + msg.getDetails());
-                    handlePayment(msg.getDetails());
+                    log.info(id + ": Processing payment for ticket: " + msg.getDetails());
+                    pcsCore.send(new Msg(id, mbox, Msg.Type.PayMachinePayment, msg.getDetails()));
+                    break;
+
+                case PayMachineError:
+                    log.warning(id + "The ticket with number " + msg.getDetails() + "does not exist");
+                    // fixme: handle the error message.
                     break;
 
                 case Poll:
@@ -62,10 +67,6 @@ public class PayMachineHandler extends AppThread {
         appKickstarter.unregThread(this);
         log.info(id + ": terminating...");
     } // run
-
-    private void handlePayment(String ticketNumber) {
-        // fixme: implement the payment handle function.
-    }
 
     /**
      * This method is used to show the information when card is inserted

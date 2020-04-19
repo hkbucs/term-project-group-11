@@ -1,44 +1,80 @@
 package PCS;
 
-import PCS.PCSStarter;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Ticket {
+    private static int count = 10000000;
+    private int ticketNumber;
+    private Date enterTime;
+    private Date leaveTime;
+    private Date paymentTime;
+    private double fee;
+    private boolean validation = false;
+    private boolean paid = false;
 
-    private int id;
-    private LocalDateTime entranceTime;
-    private LocalDateTime exitTime;
-    private boolean finishPayment;
-    private boolean inside;
-
-    public Ticket(int id){
-        this.id = id;
-        LocalDateTime now = LocalDateTime.now();
-        this.entranceTime = now;
-        this.exitTime = null;
-        this.finishPayment = false;
-        this.inside = true;
+    public Ticket(Date enterTime) {
+        ticketNumber = count++;
+        this.enterTime = enterTime;
+        leaveTime = null;
+        paymentTime = null;
+        fee = 0;
     }
 
-    public void finishPayment(){
-        finishPayment = true;
+    public int getTicketNumber() {
+        return ticketNumber;
     }
 
-    public int getId(){
-        return id;
+    public Date getEnterTime() {
+        return enterTime;
     }
 
-    public void leave(){
-        inside = false;
+    public Date getLeaveTime() {
+        return leaveTime;
     }
 
-    public boolean getFinishPayment(){
-        return finishPayment;
+    public void setLeaveTime(Date leaveTime) {
+        this.leaveTime = leaveTime;
     }
 
-    public boolean getInside(){
-        return inside;
+    public Date getPaymentTime(){
+        return paymentTime;
     }
 
+    public void setPaymentTime(Date paymentTime) {
+        this.paymentTime = paymentTime;
+    }
+
+    public double getFee(){
+        return fee;
+    }
+
+    public void setFee(double fee){
+        this.fee = fee;
+    }
+
+    public boolean getPaid() {
+        return paid;
+    }
+
+    public void setPaid(boolean paid) {
+        this.paid = paid;
+    }
+
+    public boolean getValidation() {
+        return validation;
+    }
+
+    public void setValidation(boolean validation) {
+        this.validation = validation;
+    }
+
+    public String toString() {
+        return "Ticket{" +
+                "ticketNumber=" + ticketNumber +
+                ", enterTime=" + enterTime +
+                ", leaveTime=" + leaveTime +
+                ", paymentTime=" + paymentTime +
+                ", validation=" + validation +
+                '}';
+    }
 }

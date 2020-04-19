@@ -2,7 +2,6 @@ package PCS.DispatcherHandler;
 
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
-import PCS.CollectorHandler.CollectorHandler;
 
 
 public class DispatcherHandler extends AppThread {
@@ -28,16 +27,16 @@ public class DispatcherHandler extends AppThread {
     protected boolean processMsg(Msg msg) {
         boolean quit = false;
         switch (msg.getType()) {
-            case DispatcherPrintTicket:
-                pcsCore.send(new Msg(id, mbox, Msg.Type.DispatcherPrintTicket, msg.getDetails()));
+            case DispatcherCreateTicket:
+                pcsCore.send(new Msg(id, mbox, Msg.Type.DispatcherCreateTicket, msg.getDetails()));
                 printTicket();
                 break;
             case DispatcherTakeTicket:
                 pcsCore.send(new Msg(id, mbox, Msg.Type.DispatcherTakeTicket, msg.getDetails()));
                 takeTicket();
                 break;
-            case DispatcherGetNewTicketID:
-                dealNewTicketID(msg.getDetails());
+            case DispatcherGetNewTicketNumber:
+                handleNewTicket(msg.getDetails());
                 break;
             case Poll:
                 pcsCore.send(new Msg(id, mbox, Msg.Type.PollAck, id + " is up!"));
@@ -61,7 +60,7 @@ public class DispatcherHandler extends AppThread {
         log.info(id + ": Ticket was taken and door opened");
     }
 
-    protected void dealNewTicketID(String tID){
-        log.info(id + ": New Ticket With Number " + tID);
+    protected void handleNewTicket(String ticketNumber){
+        log.info(id + ": New Ticket With Number " + ticketNumber);
     }
 }

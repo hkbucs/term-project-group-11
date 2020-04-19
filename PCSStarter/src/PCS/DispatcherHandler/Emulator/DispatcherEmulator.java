@@ -58,8 +58,8 @@ public class DispatcherEmulator extends DispatcherHandler {
         logFine("Ticket was Taken");
     }
 
-    protected void dealNewTicketID(String tID) {
-        logFine("New Ticket With Number " + tID);
+    protected void handleNewTicket(String ticketNumber) {
+        logFine("New Ticket With Number " + ticketNumber);
     }
 
     private final void logFine(String logMsg) {

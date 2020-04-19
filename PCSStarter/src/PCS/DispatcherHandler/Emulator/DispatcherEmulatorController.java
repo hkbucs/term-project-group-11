@@ -6,8 +6,6 @@ import AppKickstarter.misc.Msg;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import java.util.logging.Logger;
 
@@ -34,7 +32,7 @@ public class DispatcherEmulatorController {
         switch (btn.getText()) {
             case "Give Me a Ticket":
                 appendTextArea("Ticket Printed");
-                dispatcherHandlerMBox.send(new Msg(id, null, Msg.Type.DispatcherPrintTicket, ""));
+                dispatcherHandlerMBox.send(new Msg(id, null, Msg.Type.DispatcherCreateTicket, ""));
                 break;
             case "Take the Ticket":
                 appendTextArea("Ticket Taken");
