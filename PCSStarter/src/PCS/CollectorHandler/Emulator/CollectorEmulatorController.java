@@ -23,9 +23,9 @@ public class CollectorEmulatorController {
     /**
      * constructor for initialize
      *
-     * @param id                 message from msg queue
-     * @param appKickstarter     appKickstarter
-     * @param log                log
+     * @param id                message from msg queue
+     * @param appKickstarter    appKickstarter
+     * @param log               log
      * @param collectorEmulator dispatcherEmulator
      */
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, CollectorEmulator collectorEmulator) {

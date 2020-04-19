@@ -4,7 +4,8 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity"
             prefHeight="470.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
             fx:controller="PCS.DispatcherHandler.Emulator.DispatcherEmulatorController">
     <children>

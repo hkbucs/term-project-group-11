@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 //======================================================================
 // AppKickstarter
 public abstract class AppKickstarter {
+    private final Timer timer = null;
     protected String id = null;
     protected Logger log = null;
     private String cfgFName = null;
@@ -25,7 +26,6 @@ public abstract class AppKickstarter {
     private Hashtable<String, AppThread> appThreads = null;
     private ConsoleHandler logConHd = null;
     private FileHandler logFileHd = null;
-    private final Timer timer = null;
 
     /**
      * Constructor for AppKickstarter (default log file NOT appending)

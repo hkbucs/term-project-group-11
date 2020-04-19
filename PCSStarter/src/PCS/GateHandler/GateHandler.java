@@ -10,6 +10,7 @@ import AppKickstarter.misc.Msg;
 // GateHandler
 public class GateHandler extends AppThread {
     protected final MBox pcsCore;
+    protected final MBox gateHandlerMbox;
     private GateStatus gateStatus;
 
     //------------------------------------------------------------
@@ -18,6 +19,7 @@ public class GateHandler extends AppThread {
         super(id, appKickstarter);
         pcsCore = appKickstarter.getThread("PCSCore").getMBox();
         gateStatus = GateStatus.GateClosed;
+        gateHandlerMbox = appKickstarter.getThread(id).getMBox();
     } // GateHandler
 
 

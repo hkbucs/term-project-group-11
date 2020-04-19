@@ -9,8 +9,9 @@ public class Ticket {
     private Date leaveTime;
     private Date paymentTime;
     private double fee;
-    private boolean validation = false;
-    private boolean paid = false;
+    private boolean isValid = false;
+    private boolean isPaid = false;
+    private boolean isTaken = false; // The flag of checking whether the user takes the ticket from the Pay Machine.
 
     public Ticket(Date enterTime) {
         ticketNumber = count++;
@@ -53,19 +54,27 @@ public class Ticket {
     }
 
     public boolean getPaid() {
-        return paid;
+        return isPaid;
     }
 
-    public void setPaid(boolean paid) {
-        this.paid = paid;
+    public void setPaid(boolean isPaid) {
+        this.isPaid = isPaid;
     }
 
-    public boolean getValidation() {
-        return validation;
+    public boolean getValid() {
+        return isValid;
     }
 
-    public void setValidation(boolean validation) {
-        this.validation = validation;
+    public void setValid(boolean valid) {
+        this.isValid = valid;
+    }
+
+    public boolean getTaken() {
+        return isTaken;
+    }
+
+    public void setTaken(boolean isTaken) {
+        this.isTaken = isTaken;
     }
 
     public String toString() {
@@ -74,7 +83,7 @@ public class Ticket {
                 ", enterTime=" + enterTime +
                 ", leaveTime=" + leaveTime +
                 ", paymentTime=" + paymentTime +
-                ", validation=" + validation +
+                ", validation=" + isValid +
                 '}';
     }
 }

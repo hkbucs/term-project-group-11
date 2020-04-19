@@ -41,15 +41,15 @@ public class CollectorHandler extends AppThread {
     /**
      * Function for message process
      *
-     * @param msg   message from msg queue
-     * @return      the flag of quit
+     * @param msg message from msg queue
+     * @return the flag of quit
      */
     protected boolean processMsg(Msg msg) {
         boolean quit = false;
         switch (msg.getType()) {
             case CollectorInsertTicket:
                 String tID = msg.getDetails();
-                log.info(id + "Ticket Inserted.");
+                log.info(id + ": Ticket Inserted.");
                 switch (status) {
                     case Idle:
                         log.info(id + ": Sending ticket information to PCS");
@@ -62,7 +62,7 @@ public class CollectorHandler extends AppThread {
                 break;
             case AdminOpen:
                 log.info(id + ": Admin Pressed the Button");
-                pcsCore.send(new Msg(id, mbox, Msg.Type.AdminOpen, ""));
+                pcsCore.send(new Msg(id, mbox, Msg.Type.AdminOpen, msg.getDetails()));
                 switch (status) {
                     case RingingAlarm:
                         log.info(id + ": Admin stopped alarm and opened the door");
@@ -130,9 +130,9 @@ public class CollectorHandler extends AppThread {
      */
     protected void alarmSignal(boolean alarmSignal) {
         if (alarmSignal) {
-            log.info(id + ": Ring the Alarm");
+            log.info(id + ": Ring the Alarm.");
         } else {
-            log.info(id + ": Stop the Alarm");
+            log.info(id + ": Stop the Alarm.");
         }
     }
 

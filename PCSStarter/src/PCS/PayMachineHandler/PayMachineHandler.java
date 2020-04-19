@@ -34,7 +34,7 @@ public class PayMachineHandler extends AppThread {
                     break;
                 //payment request
                 case PayMachineRemoveTicket:
-//                    pcsCore.send(new Msg(id, mbox, Msg.Type.PayMachineRemoveTicket, msg.getDetails()));
+                    pcsCore.send(new Msg(id, mbox, Msg.Type.PayMachineRemoveTicket, msg.getDetails()));
                     handleTicketRemove();
                     break;
 
