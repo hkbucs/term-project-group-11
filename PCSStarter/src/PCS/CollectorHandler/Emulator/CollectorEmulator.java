@@ -51,7 +51,7 @@ public class CollectorEmulator extends CollectorHandler {
     }
 
     protected void insertedTicket(String tID) {
-        logFine("OK for your ticket");
+        logFine("Ticket Inserted " + tID);
     }
 
     protected void adminOpen() {

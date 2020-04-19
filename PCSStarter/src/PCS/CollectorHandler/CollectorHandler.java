@@ -31,19 +31,72 @@ public class CollectorHandler extends AppThread {
         boolean quit = false;
         switch (msg.getType()) {
             case CollectorInsertTicket:
-                insertedTicket(msg.getDetails());
+                String tID = msg.getDetails();
+                log.info(id + "Ticket Inserted.");
+                switch (status) {
+                    case Idle:
+                        log.info(id + ": Sending ticket information to PCS");
+                        pcsCore.send(new Msg(id, mbox, Msg.Type.CollectorInsertTicket, tID));
+                        status = CollectorStatus.CollectorInsertTicket;
+                        break;
+                    default:
+                        log.warning(id + ": Ignored");
+                }
                 break;
             case AdminOpen:
-                adminOpen();
+                log.info(id + ": Admin Pressed the Button");
+                pcsCore.send(new Msg(id, mbox, Msg.Type.AdminOpen, ""));
+                switch (status)
+                {
+                    case RingingAlarm:
+                        log.info(id + ": Admin stopped alarm and opened the door");
+                        alarm = false;
+                        alarmSignal(alarm);
+                        status = CollectorStatus.Idle;
+                        break;
+                    default:
+                        log.warning(id + ": Ignored");
+                }
                 break;
             case PAck:
-                pack();
+                log.info(id + ": positive acknowledgement received");
+                switch (status) {
+                    case CollectorInsertTicket:
+                        log.info(id + ": valid ticket.");
+                        status = CollectorStatus.Idle;
+                        break;
+                    case RingingAlarm:
+                        log.warning(id + ": Collector is ringing alarm now!!");
+                        break;
+                    default:
+                        log.warning(id + ": Ignored");
+                }
                 break;
             case NAck:
-                nack();
+                log.info(id + ": Alert! Admin! ");
+                switch (status) {
+                    case CollectorInsertTicket:
+                        log.info(id + ": invalid ticket.");
+                        alarm = true;
+                        alarmSignal(alarm);
+                        status = CollectorStatus.RingingAlarm;
+                        break;
+                    default:
+                        log.warning(id + ": Ignored");
+                }
                 break;
             case CollectorError:
-                wrongTicket();
+                switch (status) {
+                    case Idle:
+                        log.info(id + ": Collector idle now.");
+                        break;
+                    case CollectorInsertTicket:
+                        log.warning(id + ": Wrong Ticket");
+                        status = CollectorStatus.Idle;
+                        break;
+                    default:
+                        log.warning(id + ": Ignored");
+                }
                 break;
             case Terminate:
                 quit = true;
@@ -54,83 +107,11 @@ public class CollectorHandler extends AppThread {
         return quit;
     }
 
-    protected void insertedTicket(String tID) {
-        log.info(id + "Ticket Inserted.");
-        switch (status) {
-            case Idle:
-                log.info(id + ": Sending ticket information to PCS");
-                pcsCore.send(new Msg(id, mbox, Msg.Type.CollectorInsertTicket, tID));
-                status = CollectorStatus.CollectorInsertTicket;
-                break;
-            default:
-                log.warning(id + ": Ignored");
-        }
-    }
-
-    protected void adminOpen() {
-        log.info(id + ": Admin Pressed the Button");
-        pcsCore.send(new Msg(id, mbox, Msg.Type.AdminOpen, ""));
-        switch (status)
-        {
-            case RingingAlarm:
-                log.info(id + ": Admin stopped alarm and opened the door");
-                alarm = false;
-                alarmSignal(alarm);
-                status = CollectorStatus.Idle;
-                break;
-            default:
-                log.warning(id + ": Ignored");
-        }
-    }
-
-    protected void pack() {
-        log.info(id + ": positive acknowledgement received");
-        switch (status) {
-            case CollectorInsertTicket:
-                log.info(id + ": valid ticket.");
-                status = CollectorStatus.Idle;
-                break;
-            case RingingAlarm:
-                log.warning(id + ": Collector is ringing alarm now!!");
-                break;
-            default:
-                log.warning(id + ": Ignored");
-        }
-    }
-
-    protected void nack() {
-        log.info(id + ": Alert! Admin! ");
-        switch (status) {
-            case CollectorInsertTicket:
-                log.info(id + ": invalid ticket.");
-                alarm = true;
-                alarmSignal(alarm);
-                status = CollectorStatus.RingingAlarm;
-                break;
-            default:
-                log.warning(id + ": Ignored");
-        }
-    }
-
     protected void alarmSignal(boolean alarmSignal) {
         if(alarmSignal){
             log.info(id + ": Ring the Alarm");
         }else{
             log.info(id + ": Stop the Alarm");
-        }
-    }
-
-    protected void wrongTicket(){
-        switch (status) {
-            case Idle:
-                log.info(id + ": Collector idle now.");
-                break;
-            case CollectorInsertTicket:
-                log.warning(id + ": Wrong Ticket");
-                status = CollectorStatus.Idle;
-                break;
-            default:
-                log.warning(id + ": Ignored");
         }
     }
 
