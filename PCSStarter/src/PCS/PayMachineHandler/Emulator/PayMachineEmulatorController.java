@@ -23,7 +23,6 @@ public class PayMachineEmulatorController {
     private boolean insert;
 
     public TextField ticketNumField;
-    public TextField ticketStatusField;
     public TextArea ticketReaderTextArea;
 
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, PayMachineEmulator payMachineEmulator) {
@@ -43,9 +42,9 @@ public class PayMachineEmulatorController {
         //String buID = bu.getId();
 
         switch (btn.getText()) {
-            case "Check Ticket":
-                ticketNumField.setText(appKickstarter.getProperty("TicketReader.Ticket"));
-                break;
+//            case "Check Ticket":
+//                ticketNumField.setText(appKickstarter.getProperty("TicketReader.Ticket"));
+//                break;
 
             case "Reset":
                 ticketNumField.setText("");
@@ -83,9 +82,6 @@ public class PayMachineEmulatorController {
                 break;
         }
     }
-    public void updateTicketStatus(String status) {
-        ticketStatusField.setText(status);
-    } // updateTicketStatus
 
     public void appendTextArea(String status) {
         ticketReaderTextArea.appendText(status + "\n");

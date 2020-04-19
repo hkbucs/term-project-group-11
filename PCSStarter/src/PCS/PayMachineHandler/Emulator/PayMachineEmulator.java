@@ -53,7 +53,6 @@ public class PayMachineEmulator extends PayMachineHandler {
         protected void handleTicketInsert() {
             super.handleTicketInsert();
             payMachineEmulatorController.appendTextArea("Ticket Inserted");
-            payMachineEmulatorController.updateTicketStatus("Ticket Inserted");
         } // handleCardInsert
 
         /**
@@ -66,7 +65,6 @@ public class PayMachineEmulator extends PayMachineHandler {
         protected void handleTicketRemove() {
             super.handleTicketRemove();
             payMachineEmulatorController.appendTextArea("Ticket Removed");
-            payMachineEmulatorController.updateTicketStatus("Ticket Reader Empty");
         } // handleCardRemove
     } // CardReaderEmulator
 
