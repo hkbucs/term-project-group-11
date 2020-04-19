@@ -43,10 +43,12 @@ public class PayMachineEmulatorController {
 
         switch (btn.getText()) {
 
+            //Clean up the input field
             case "Reset":
                 ticketNumField.setText("");
                 break;
 
+            //Type the ticket num and check whether the ticket exists or not, if yes, ticket can be inserted
             case "Insert Ticket":
                 if (ticketNumField.getText().length() != 0 &&  ticketNumField.getText().length() < 10 && insert == false ) {
                     ticketReaderTextArea.appendText("Sending ticket [" + ticketNumField.getText() + "] to PCS for checking." + "\n");
@@ -55,6 +57,7 @@ public class PayMachineEmulatorController {
                 }
                 break;
 
+                //Remove the ticket from pay machine
             case "Remove Ticket":
                 if(insert == true) {
                     ticketReaderTextArea.appendText("Ticket removed\n");
@@ -63,6 +66,7 @@ public class PayMachineEmulatorController {
                 }
                 break;
 
+                //Process the payment function
             case "Pay":
                 if ( insert == true) {
                     DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -81,6 +85,7 @@ public class PayMachineEmulatorController {
         }
     }
 
+    //Append a text on the screen
     public void appendTextArea(String status) {
         ticketReaderTextArea.appendText(status + "\n");
     } // appendTextArea

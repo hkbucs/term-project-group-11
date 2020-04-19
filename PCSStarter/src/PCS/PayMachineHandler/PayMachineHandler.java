@@ -75,21 +75,21 @@ public class PayMachineHandler extends AppThread {
     } // run
 
     /**
-     * This method is used to show the information when card is inserted
+     * This method is used to show the information when ticket is inserted
      */
 
     // ------------------------------------------------------------
-    // handleCardInsert
+    // handleTicketInsert
     protected void handleTicketInsert() {
         log.info(id + ": ticket inserted");
     } // handleCardInsert
 
     /**
-     * This method is used to show the information when card is inserted
+     * This method is used to show the information when ticket is removed
      */
 
     // ------------------------------------------------------------
-    // handleCardInsert
+    // handleTicketRemove
     protected void handleTicketRemove() {
         log.info(id + ": ticket removed");
     } // handleCardInsert
