@@ -17,6 +17,7 @@ public class PayMachineEmulator extends PayMachineHandler {
     private final PCSStarter pcsStarter;
     private PayMachineEmulatorController payMachineEmulatorController;
     private Stage myStage;
+    private String[] tickDetails;
 
     /**
      * Constructor for an appThread
@@ -64,7 +65,30 @@ public class PayMachineEmulator extends PayMachineHandler {
         // handleCardRemove
         protected void handleTicketRemove() {
             super.handleTicketRemove();
-            payMachineEmulatorController.appendTextArea("Ticket Removed");
+            payMachineEmulatorController.appendTextArea("Ticket Removed\n");
         } // handleCardRemove
+
+        // ------------------------------------------------------------
+        // handleErrorTicket
+        protected void handleErrorTicket() {
+            super.handleErrorTicket();
+            payMachineEmulatorController.appendTextArea("Ticket does not exist!\n");
+        } // handleErrorTicket
+
+        // ------------------------------------------------------------
+        // handlePrintTicketInfo
+        protected void handlePrintTicketInfo(String ticketinfo) {
+            super.handlePrintTicketInfo(ticketinfo);
+            if (ticketinfo != "") {
+                payMachineEmulatorController.appendTextArea("Total parking fee is: " + ticketinfo);
+            }
+//            String[] tickDetails = ticketinfo.split(";");
+//            payMachineEmulatorController.appendTextArea(tickDetails[0]);
+//            payMachineEmulatorController.appendTextArea("Total parking fee is: " + tickDetails[1]);
+
+        } // handlePrintTicketInfo
+
+
+
     } // CardReaderEmulator
 

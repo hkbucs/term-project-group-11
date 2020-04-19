@@ -42,31 +42,30 @@ public class PayMachineEmulatorController {
         //String buID = bu.getId();
 
         switch (btn.getText()) {
-//            case "Check Ticket":
-//                ticketNumField.setText(appKickstarter.getProperty("TicketReader.Ticket"));
-//                break;
 
             case "Reset":
                 ticketNumField.setText("");
                 break;
 
             case "Insert Ticket":
-                if (ticketNumField.getText().length() != 0) {
-                    ticketReaderTextArea.appendText("Sending " + ticketNumField.getText() + "\n");
+                if (ticketNumField.getText().length() != 0 &&  ticketNumField.getText().length() < 10 && insert == false ) {
+                    ticketReaderTextArea.appendText("Sending ticket [" + ticketNumField.getText() + "] to PCS for checking." + "\n");
                     PayMachineMBox.send(new Msg(id, PayMachineMBox, Msg.Type.PayMachineInsertTicket, ticketNumField.getText()));
                     insert = true;
                 }
                 break;
 
             case "Remove Ticket":
-                ticketReaderTextArea.appendText("Removing ticket\n");
-                PayMachineMBox.send(new Msg(id, PayMachineMBox, Msg.Type.PayMachineRemoveTicket, ticketNumField.getText()));
-                insert = false;
+                if(insert == true) {
+                    ticketReaderTextArea.appendText("Ticket removed\n");
+                    ticketReaderTextArea.appendText("Please collect your ticket\n");
+                    PayMachineMBox.send(new Msg(id, PayMachineMBox, Msg.Type.PayMachineRemoveTicket, ticketNumField.getText()));
+                    insert = false;
+                }
                 break;
 
             case "Pay":
                 if ( insert == true) {
-                    ticketReaderTextArea.appendText("Pay Successfully\n");
                     DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                     LocalDateTime now = LocalDateTime.now();
                     this.currentTime = now;
@@ -74,6 +73,7 @@ public class PayMachineEmulatorController {
                     ticketReaderTextArea.appendText("Payment Time: " + paymentTime + "\n");
 
                     PayMachineMBox.send(new Msg(id, PayMachineMBox, Msg.Type.PayMachinePayment, ticketNumField.getText()));
+                    ticketReaderTextArea.appendText("Pay Successfully\n");
                 }
                 break;
 

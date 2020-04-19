@@ -47,7 +47,7 @@ public class PayMachineHandler extends AppThread {
 
                 case PayMachineError:
                     log.warning(id + "The ticket with number " + msg.getDetails() + "does not exist");
-                    // fixme: handle the error message.
+                    handleErrorTicket();
                     break;
 
                 case Poll:
@@ -89,7 +89,12 @@ public class PayMachineHandler extends AppThread {
     } // handleCardInsert
 
     protected void handlePrintTicketInfo(String ticketinfo) {
-        log.info(id + "Entrance time " + ticketinfo);
+        log.info(id + "Parking fee: " + ticketinfo);
     } // handlePrintTicketInfo
+
+    protected void handleErrorTicket() {
+        log.info(id + "ErrorTicket");
+    } // handleErrorTicket
+
 
 }

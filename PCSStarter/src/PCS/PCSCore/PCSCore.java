@@ -219,7 +219,7 @@ public class PCSCore extends AppThread {
             double fee = calculateFee(ticket.getEnterTime(), ticket.getPaymentTime());
             ticket.setFee(fee);
             log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] the parking fee is updated");
-            String message = ticket.getPaymentTime().toString() + "|" + String.valueOf(ticket.getFee());
+            String message = String.valueOf(ticket.getFee());
             payMachineMBox.send(new Msg(id, mbox, Msg.Type.PrintTicketInfo, message));
         }else{
             log.warning(id + ": Ticket[" + ticketNumber + "] does not exist");
