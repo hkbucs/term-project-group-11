@@ -9,12 +9,22 @@ public class CollectorHandler extends AppThread {
     private boolean alarm;
     protected final MBox pcsCore;
 
+    /**
+     * Constructor for the Handler
+     *
+     * @param id id of this device
+     * @param appKickstarter app kickstarter
+     * */
     public CollectorHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
         pcsCore = appKickstarter.getThread("PCSCore").getMBox();
         status = CollectorStatus.Idle;
     }
 
+    /**
+     * Function for running the thread
+     *
+     * */
     public void run() {
         Thread.currentThread().setName(id);
         log.info(id + ": starting...");
@@ -27,6 +37,11 @@ public class CollectorHandler extends AppThread {
         log.info(id + ": terminating...");
     }
 
+    /**
+     * Function for message process
+     *
+     * @param msg message from msg queue
+     * */
     protected boolean processMsg(Msg msg){
         boolean quit = false;
         switch (msg.getType()) {
@@ -107,6 +122,11 @@ public class CollectorHandler extends AppThread {
         return quit;
     }
 
+    /**
+     * Function for alarm signal
+     *
+     * @param alarmSignal alarm status
+     * */
     protected void alarmSignal(boolean alarmSignal) {
         if(alarmSignal){
             log.info(id + ": Ring the Alarm");
@@ -115,6 +135,9 @@ public class CollectorHandler extends AppThread {
         }
     }
 
+    /**
+     * status in this class
+     * */
     private enum CollectorStatus {
         Idle,
         CollectorInsertTicket,

@@ -24,6 +24,10 @@ public class CollectorEmulator extends CollectorHandler {
         this.id = id;
     }
 
+    /**
+     * Function to start UI
+     *
+     * */
     public void start() throws Exception {
         Parent root;
         myStage = new Stage();
@@ -44,26 +48,49 @@ public class CollectorEmulator extends CollectorHandler {
         myStage.show();
     }
 
+    /**
+     * Function for message process
+     *
+     * @param msg message from msg queue
+     * */
     protected final boolean processMsg(Msg msg) {
         boolean quit = false;
         quit = super.processMsg(msg);
         return quit;
     }
 
+    /**
+     * Function when card inserted
+     *
+     * @param tID ticket id
+     * */
     protected void insertedTicket(String tID) {
         logFine("Ticket Inserted " + tID);
     }
 
+    /**
+     * Function to respond to admin open
+     *
+     * */
     protected void adminOpen() {
         logFine("Admin has Pressed");
     }
 
+    /**
+     * Function for alarm signal
+     *
+     * @param alarmSignal alarm status
+     * */
     protected void alarmSignal(boolean alarmSignal) {
         if(alarmSignal){
             logWarning("Alarm Ringing");
         }
     }
 
+    /**
+     * Function for wrong ticket number
+     *
+     * */
     protected void wrongTicket(){
         logWarning("Wrong Ticket");
     }

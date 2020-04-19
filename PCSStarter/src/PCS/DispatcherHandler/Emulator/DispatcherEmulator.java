@@ -24,6 +24,10 @@ public class DispatcherEmulator extends DispatcherHandler {
         this.id = id;
     }
 
+    /**
+     * Function to start UI
+     *
+     * */
     public void start() throws Exception {
         Parent root;
         myStage = new Stage();
@@ -44,20 +48,36 @@ public class DispatcherEmulator extends DispatcherHandler {
         myStage.show();
     }
 
+    /**
+     * Function for message process
+     *
+     * @param msg message from msg queue
+     * */
     protected final boolean processMsg(Msg msg) {
         boolean quit = false;
         quit = super.processMsg(msg);
         return quit;
     }
 
+    /**
+     * Function for print ticket
+     * */
     protected void printTicket() {
         logFine("Ticket was printed");
     }
 
+    /**
+     * Function for ticket was taken
+     * */
     protected void takeTicket() {
         logFine("Ticket was Taken");
     }
 
+    /**
+     * Function for new ticket number comes to the handler
+     *
+     * @param ticketNumber ticket number
+     * */
     protected void handleNewTicket(String ticketNumber) {
         logFine("New Ticket With Number " + ticketNumber);
     }
