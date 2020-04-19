@@ -70,7 +70,9 @@ public class PCSCore extends AppThread {
                 case GateOpenReply:
                     log.info(id + ": Gate is opened.");
                     gateIsClosed = false;
-                    gateMBox.send(new Msg(id, mbox, Msg.Type.GateCloseRequest, ""));
+                    if(!isDemo){
+                        gateMBox.send(new Msg(id, mbox, Msg.Type.GateCloseRequest, ""));
+                    }
                     break;
 
                 case GateCloseReply:
@@ -253,9 +255,7 @@ public class PCSCore extends AppThread {
         long diffDays = diff / (24 * 60 * 60 * 1000);
         // Calculate the fee
         if (diffSeconds > 0) {
-            if (diffSeconds > 0) {
-                diffMinutes += 1;
-            }
+            diffMinutes += 1;
         }
         if (diffMinutes > 0) {
             if (diffMinutes > 30) {
