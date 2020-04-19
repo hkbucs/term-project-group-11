@@ -40,6 +40,11 @@ public class PayMachineHandler extends AppThread {
                     handlePrintTicketInfo();
                     break;
 
+                case PayMachinePayment:
+                    log.info(id + ": Handling payment for: " + msg.getDetails());
+                    handlePayment(msg.getDetails());
+                    break;
+
                 case Poll:
                     pcsCore.send(new Msg(id, mbox, Msg.Type.PollAck, id + " is up!"));
                     break;
@@ -57,6 +62,10 @@ public class PayMachineHandler extends AppThread {
         appKickstarter.unregThread(this);
         log.info(id + ": terminating...");
     } // run
+
+    private void handlePayment(String ticketNumber) {
+        // fixme: implement the payment handle function.
+    }
 
     /**
      * This method is used to show the information when card is inserted

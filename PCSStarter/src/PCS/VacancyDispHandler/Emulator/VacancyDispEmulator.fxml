@@ -13,10 +13,10 @@
         <Text layoutX="392.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fourth Floor" />
         <AnchorPane layoutX="9.0" layoutY="14.0" prefHeight="125.0" prefWidth="483.0">
             <children>
-                <TextField fx:id = "text1" layoutX="28.0" layoutY="31.0" prefHeight="64.0" prefWidth="81.0" />
-                <TextField fx:id = "text2" layoutX="149.0" layoutY="31.0" prefHeight="64.0" prefWidth="81.0" />
-                <TextField fx:id = "text4" layoutX="381.0" layoutY="31.0" prefHeight="64.0" prefWidth="81.0" />
-                <TextField fx:id = "text3" layoutX="264.0" layoutY="31.0" prefHeight="64.0" prefWidth="81.0" />
+                <TextField fx:id = "floor1" layoutX="28.0" layoutY="31.0" prefHeight="64.0" prefWidth="81.0" />
+                <TextField fx:id = "floor2" layoutX="149.0" layoutY="31.0" prefHeight="64.0" prefWidth="81.0" />
+                <TextField fx:id = "floor3" layoutX="381.0" layoutY="31.0" prefHeight="64.0" prefWidth="81.0" />
+                <TextField fx:id = "floor4" layoutX="264.0" layoutY="31.0" prefHeight="64.0" prefWidth="81.0" />
             </children>
         </AnchorPane>
     </children>

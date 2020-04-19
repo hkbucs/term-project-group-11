@@ -17,12 +17,13 @@ public class PCSCore extends AppThread {
     private final int PollTimerID = 1;
     private final int openCloseGateTime;        // for demo only!!!
     private final int OpenCloseGateTimerID = 2;        // for demo only!!!
+    private final ArrayList<Ticket> tickets = new ArrayList<Ticket>();
     private MBox gateMBox;
     private MBox paymentMBox;
     private MBox dispatcherMBox;
     private MBox collectorMBox;
+    private MBox vacancyDispMBox;
     private boolean gateIsClosed = true;        // for demo only!!
-    private final ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 
 
     //------------------------------------------------------------
@@ -45,7 +46,8 @@ public class PCSCore extends AppThread {
         gateMBox = appKickstarter.getThread("GateHandler").getMBox();
         dispatcherMBox = appKickstarter.getThread("DispatcherHandler").getMBox();
         collectorMBox = appKickstarter.getThread("CollectorHandler").getMBox();
-        paymentMBox = appKickstarter.getThread("id:PayMachineHandler").getMBox();
+        paymentMBox = appKickstarter.getThread("PayMachineHandler").getMBox();
+        vacancyDispMBox = appKickstarter.getThread("VacancyDispHandler").getMBox();
 
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
@@ -56,7 +58,7 @@ public class PCSCore extends AppThread {
                 case TimesUp:
                     handleTimesUp(msg);
                     break;
-
+                /** For message from Gate */
                 case GateOpenReply:
                     log.info(id + ": Gate is opened.");
                     gateIsClosed = false;
@@ -75,15 +77,13 @@ public class PCSCore extends AppThread {
                     log.info(id + ": sending gate close signal to hardware.");
                     break;
 
-                case sendPollSignal:
-                    log.info(id + ": poll request received.");
-                    break;
-
+                /** For message from PayMachine */
                 case PayMachineInsertTicket:
                     log.info(id + ": ticket is inserted.");
                     paymentMBox.send(new Msg(id, mbox, Msg.Type.PrintTicketInfo, ""));
                     break;
 
+                /** For message from Dispatcher */
                 case DispatcherPrintTicket:
                     log.info(id + ": ticket is printed.");
                     int length = tickets.size();
@@ -98,6 +98,7 @@ public class PCSCore extends AppThread {
                     gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
                     break;
 
+                /** For message from Dispatcher */
                 case CollectorInsertTicket:
                     log.info(id + ": ticket was taken.");
                     checkCollectedTicket(msg.getDetails());
@@ -106,6 +107,21 @@ public class PCSCore extends AppThread {
                 case AdminOpen:
                     log.info(id + ": admin force open.");
                     gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
+                    break;
+
+                /** For message from Vacancy Display */
+                case CarPassThrough:
+                    log.info(id + " One car passes through the sensor.");
+                    vacancyDispMBox.send(new Msg(id, mbox, Msg.Type.UpdateDisplay, msg.getDetails()));
+                    break;
+
+                case CarLeave:
+                    log.info(id + " One car leaves that floor.");
+                    vacancyDispMBox.send(new Msg(id, mbox, Msg.Type.UpdateDisplay, msg.getDetails()));
+                    break;
+
+                case sendPollSignal:
+                    log.info(id + ": poll request received.");
                     break;
 
                 case PollAck:

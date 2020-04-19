@@ -8,19 +8,19 @@
     <children>
         <AnchorPane prefHeight="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <children>
-                <Button id="1-1" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Up" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
-                <Button id="2-1" layoutX="123.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Up" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="123.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
-                <Button id="3-1" layoutX="244.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Up" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="244.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
-                <Button id="4-1" layoutX="360.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Up" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
+                <Button id="floor1-1" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Up" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
+                <Button id="floor2-1" layoutX="123.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Up" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="123.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
+                <Button id="floor3-1" layoutX="244.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Up" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="244.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
+                <Button id="floor4-1" layoutX="360.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Up" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
             </children>
         </AnchorPane>
 
         <AnchorPane prefHeight="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
             <children>
-                <Button id="1-2" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Down" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
-                <Button id="2-2" layoutX="124.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Down" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="124.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
-                <Button id="3-2" layoutX="244.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Down" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="244.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
-                <Button id="4-2" layoutX="360.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Down" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
+                <Button id="floor1-2" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Down" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
+                <Button id="floor2-2" layoutX="124.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Down" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="124.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
+                <Button id="floor3-2" layoutX="244.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Down" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="244.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
+                <Button id="floor4-2" layoutX="360.0" mnemonicParsing="false" onAction="#buttonPressed" prefHeight="50.0" prefWidth="100.0" text="Down" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="0.0"><font><Font size="16.0" /></font></Button>
             </children>
         </AnchorPane>
         <Text layoutX="52.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Floor" />

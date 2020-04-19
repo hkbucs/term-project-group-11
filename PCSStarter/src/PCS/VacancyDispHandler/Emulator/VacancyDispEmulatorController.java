@@ -10,13 +10,13 @@ import java.util.logging.Logger;
 public class VacancyDispEmulatorController {
 
     @FXML
-    TextField text1;
+    TextField floor1;
     @FXML
-    TextField text2;
+    TextField floor2;
     @FXML
-    TextField text3;
+    TextField floor3;
     @FXML
-    TextField text4;
+    TextField floor4;
     private String id;
     private AppKickstarter appKickstarter;
     private Logger log;
@@ -31,10 +31,44 @@ public class VacancyDispEmulatorController {
         if (appKickstarter.getThread("VacancyDispHandler") != null) {
             this.vacancyDispMBox = appKickstarter.getThread("VacancyDispHandler").getMBox();
         }
-        text1.setText("30");
-        text2.setText("30");
-        text3.setText("30");
-        text4.setText("30");
+        floor1.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+        floor2.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+        floor3.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+        floor4.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+    }
+
+    protected void handleNumberIncrease(String currentFloor){
+        switch (currentFloor){
+            case "floor1":
+                floor1.setText(String.valueOf(Integer.parseInt(floor1.getText())+1));
+                break;
+            case "floor2":
+                floor2.setText(String.valueOf(Integer.parseInt(floor2.getText())+1));
+                break;
+            case "floor3":
+                floor3.setText(String.valueOf(Integer.parseInt(floor3.getText())+1));
+                break;
+            case "floor4":
+                floor4.setText(String.valueOf(Integer.parseInt(floor4.getText())+1));
+                break;
+        }
+    }
+
+    protected void handleNumberDecrease(String currentFloor){
+        switch (currentFloor){
+            case "floor1":
+                floor1.setText(String.valueOf(Integer.parseInt(floor1.getText())-1));
+                break;
+            case "floor2":
+                floor2.setText(String.valueOf(Integer.parseInt(floor2.getText())-1));
+                break;
+            case "floor3":
+                floor3.setText(String.valueOf(Integer.parseInt(floor3.getText())-1));
+                break;
+            case "floor4":
+                floor4.setText(String.valueOf(Integer.parseInt(floor4.getText())-1));
+                break;
+        }
     }
 
 }

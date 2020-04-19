@@ -16,7 +16,7 @@ public class DispatcherEmulatorController {
     private AppKickstarter appKickstarter;
     private Logger log;
     private DispatcherEmulator dispatcherEmulator;
-    private MBox dispatcherEmulatorMBox;
+    private MBox dispatcherHandlerMBox;
     public TextArea dispatcherTextArea;
     private int lineNo = 0;
 
@@ -26,7 +26,7 @@ public class DispatcherEmulatorController {
         this.appKickstarter = appKickstarter;
         this.log = log;
         this.dispatcherEmulator = dispatcherEmulator;
-        this.dispatcherEmulatorMBox = appKickstarter.getThread("DispatcherHandler").getMBox();
+        this.dispatcherHandlerMBox = appKickstarter.getThread("DispatcherHandler").getMBox();
     }
 
     public void buttonPressed(ActionEvent actionEvent) {
@@ -34,11 +34,11 @@ public class DispatcherEmulatorController {
         switch (btn.getText()) {
             case "Give Me a Ticket":
                 appendTextArea("Ticket Printed");
-                dispatcherEmulatorMBox.send(new Msg(id, null, Msg.Type.DispatcherPrintTicket, ""));
+                dispatcherHandlerMBox.send(new Msg(id, null, Msg.Type.DispatcherPrintTicket, ""));
                 break;
             case "Take the Ticket":
                 appendTextArea("Ticket Taken");
-                dispatcherEmulatorMBox.send(new Msg(id, null, Msg.Type.DispatcherTakeTicket, ""));
+                dispatcherHandlerMBox.send(new Msg(id, null, Msg.Type.DispatcherTakeTicket, ""));
                 break;
             default:
                 log.warning(id + ": unknown button: [" + btn.getText() + "]");
@@ -49,4 +49,5 @@ public class DispatcherEmulatorController {
     public void appendTextArea(String status) {
         Platform.runLater(() -> dispatcherTextArea.appendText(String.format("[%04d] %s\n", ++lineNo, status)));
     }
+
 }

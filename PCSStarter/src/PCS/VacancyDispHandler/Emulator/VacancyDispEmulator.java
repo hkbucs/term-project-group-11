@@ -55,17 +55,12 @@ public class VacancyDispEmulator extends VacancyDispHandler {
 
             switch (msg.getType()) {
                 case UpdateDisplay:
-                    String[] details = msg.getDetails().split(",");
-                    if (Integer.parseInt(details[0]) != 0) {
-                        if (Integer.parseInt(details[0]) == 1) {
-                            vacancyDispEmulatorController.text1.setText(details[1]);
-                        } else if (Integer.parseInt(details[0]) == 2) {
-                            vacancyDispEmulatorController.text2.setText(details[1]);
-                        } else if (Integer.parseInt(details[0]) == 3) {
-                            vacancyDispEmulatorController.text3.setText(details[1]);
-                        } else if (Integer.parseInt(details[0]) == 4) {
-                            vacancyDispEmulatorController.text4.setText(details[1]);
-                        }
+                    String[] details = msg.getDetails().split("-");
+                    if (details[1].equals("1")){
+                        vacancyDispEmulatorController.handleNumberIncrease(details[0]);
+                    }
+                    if (details[1].equals("2")){
+                        vacancyDispEmulatorController.handleNumberDecrease(details[0]);
                     }
                     break;
 
