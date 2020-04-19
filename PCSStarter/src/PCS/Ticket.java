@@ -9,8 +9,6 @@ public class Ticket {
     private int id;
     private LocalDateTime entranceTime;
     private LocalDateTime exitTime;
-    private LocalDateTime paymentTime;
-    private double parkingFee;
     private boolean finishPayment;
     private boolean inside;
 
@@ -19,8 +17,6 @@ public class Ticket {
         LocalDateTime now = LocalDateTime.now();
         this.entranceTime = now;
         this.exitTime = null;
-        this.paymentTime = null;
-        this.parkingFee = 0;
         this.finishPayment = false;
         this.inside = true;
     }

@@ -37,7 +37,7 @@ public class PayMachineHandler extends AppThread {
                     break;
 
                 case PrintTicketInfo:
-                    handlePrintTicketInfo();
+                    handlePrintTicketInfo(msg.getDetails().toString());
                     break;
 
                 case PayMachinePayment:
@@ -87,9 +87,8 @@ public class PayMachineHandler extends AppThread {
         log.info(id + ": ticket removed");
     } // handleCardInsert
 
-    protected void handlePrintTicketInfo() {
-        log.info(id + ": ticket information");
+    protected void handlePrintTicketInfo(String ticketinfo) {
+        log.info(id + "Entrance time " + ticketinfo);
     } // handlePrintTicketInfo
-
 
 }

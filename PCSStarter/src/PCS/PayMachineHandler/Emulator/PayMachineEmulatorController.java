@@ -8,6 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 import java.util.logging.Logger;
 
@@ -16,6 +18,7 @@ public class PayMachineEmulatorController {
     private AppKickstarter appKickstarter;
     private Logger log;
     private PayMachineEmulator payMachineEmulator;
+    private LocalDateTime currentTime;
     private MBox PayMachineMBox;
     private boolean insert;
 
@@ -65,6 +68,12 @@ public class PayMachineEmulatorController {
             case "Pay":
                 if ( insert == true) {
                     ticketReaderTextArea.appendText("Pay Successfully\n");
+                    DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    LocalDateTime now = LocalDateTime.now();
+                    this.currentTime = now;
+                    String paymentTime = df.format(now);
+                    ticketReaderTextArea.appendText("Payment Time: " + paymentTime + "\n");
+
                     PayMachineMBox.send(new Msg(id, PayMachineMBox, Msg.Type.PayMachinePayment, ticketNumField.getText()));
                 }
                 break;
