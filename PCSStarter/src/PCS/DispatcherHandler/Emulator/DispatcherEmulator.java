@@ -25,6 +25,8 @@ public class DispatcherEmulator extends DispatcherHandler {
 
     /**
      * Function to start UI
+     *
+     * @throws
      */
     public void start() throws Exception {
         Parent root;

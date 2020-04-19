@@ -26,7 +26,7 @@ public class CollectorEmulatorController {
      * @param id                 message from msg queue
      * @param appKickstarter     appKickstarter
      * @param log                log
-     * @param dispatcherEmulator dispatcherEmulator
+     * @param collectorEmulator dispatcherEmulator
      */
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, CollectorEmulator collectorEmulator) {
         this.id = id;

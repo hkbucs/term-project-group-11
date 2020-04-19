@@ -42,6 +42,7 @@ public class CollectorHandler extends AppThread {
      * Function for message process
      *
      * @param msg message from msg queue
+     * @return
      */
     protected boolean processMsg(Msg msg) {
         boolean quit = false;

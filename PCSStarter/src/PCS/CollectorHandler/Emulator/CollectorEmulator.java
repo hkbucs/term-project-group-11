@@ -25,6 +25,8 @@ public class CollectorEmulator extends CollectorHandler {
 
     /**
      * Function to start UI
+     *
+     * @throws
      */
     public void start() throws Exception {
         Parent root;
