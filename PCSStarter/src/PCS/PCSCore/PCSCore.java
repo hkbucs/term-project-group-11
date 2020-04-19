@@ -26,6 +26,7 @@ public class PCSCore extends AppThread {
     private MBox collectorMBox;
     private MBox vacancyDispMBox;
     private boolean gateIsClosed = true;        // for demo only!!
+    private boolean demo = false;
 
 
     //------------------------------------------------------------
@@ -34,6 +35,9 @@ public class PCSCore extends AppThread {
         super(id, appKickstarter);
         this.pollTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.PollTime"));
         this.openCloseGateTime = Integer.parseInt(appKickstarter.getProperty("PCSCore.OpenCloseGateTime"));        // for demo only!!!
+        if(appKickstarter.getProperty("demo").equals("on")){
+            this.demo = true;
+        }
     } // PCSCore
 
 
@@ -230,7 +234,7 @@ public class PCSCore extends AppThread {
     private double calculateFee(Date from, Date to) {
         double fee = 0;
         // Calculate the time period
-        long diff = from.getTime() - to.getTime();
+        long diff = to.getTime() - from.getTime();
         // Express the time period in different way
         long diffSeconds = diff / 1000 % 60;
         long diffMinutes = diff / (60 * 1000) % 60;

@@ -2,8 +2,12 @@ package PCS.VacancyDispHandler.Emulator;
 
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
+import AppKickstarter.misc.Msg;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.util.logging.Logger;
@@ -78,4 +82,38 @@ public class VacancyDispEmulatorController {
         }
     }
 
+    //------------------------------------------------------------
+    // buttonPressed
+    public void buttonPressed(ActionEvent actionEvent) {
+        Button btn = (Button) actionEvent.getSource();
+
+        switch (btn.getId()) {
+            case "resetF1":
+                floor1.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+                break;
+
+            case "resetF2":
+                floor2.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+                break;
+
+            case "resetF3":
+                floor3.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+                break;
+
+            case "resetF4":
+                floor4.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+                break;
+
+            case "resetAll":
+                floor1.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+                floor2.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+                floor3.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+                floor4.setText(this.appKickstarter.getProperty("Park.floorQuota"));
+                break;
+
+            default:
+                log.warning(id + ": unknown button: [" + btn.getText() + "]");
+                break;
+        }
+    } // buttonPressed
 }
