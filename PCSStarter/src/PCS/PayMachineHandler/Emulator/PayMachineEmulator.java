@@ -51,23 +51,34 @@ public class PayMachineEmulator extends PayMachineHandler {
 
         myStage.show();
     }
-        protected void handleTicketInsert() {
-            super.handleTicketInsert();
-            payMachineEmulatorController.appendTextArea("Ticket Inserted");
-        } // handleCardInsert
-
         /**
-         * This method is used to show card removed information in text area and update
-         * card statues after Card Removed
+         * This method is used to check whether the inserted tick exists or not
+         *
          */
 
         // ------------------------------------------------------------
-        // handleCardRemove
+        // handleTicketInsert
+        protected void handleTicketInsert() {
+            super.handleTicketInsert();
+            payMachineEmulatorController.appendTextArea("Ticket Inserted\n");
+        } // handleTicketInsert
+
+        /**
+         * This method is used to remove the ticket from pay machine
+         *
+         */
+
+        // ------------------------------------------------------------
+        // handleTicketRemove
         protected void handleTicketRemove() {
             super.handleTicketRemove();
-            payMachineEmulatorController.appendTextArea("Ticket Removed\n");
-        } // handleCardRemove
+            payMachineEmulatorController.appendTextArea("Please collect your ticket\n");
+        } // handleTicketRemove
 
+        /**
+         * This method is used to handle the invalid ticket
+         *
+         */
         // ------------------------------------------------------------
         // handleErrorTicket
         protected void handleErrorTicket() {
@@ -75,6 +86,21 @@ public class PayMachineEmulator extends PayMachineHandler {
             payMachineEmulatorController.appendTextArea("Ticket does not exist!\n");
         } // handleErrorTicket
 
+        /**
+         * This method is used to process the valid ticket
+         *
+         */
+        // ------------------------------------------------------------
+        // handleErrorTicket
+        protected void handleSuccessTicket() {
+            super.handleSuccessTicket();
+            payMachineEmulatorController.appendTextArea("Pay Successfully!\n");
+        } // handleSuccessTicket
+
+        /**
+         * This method is used to print the ticket information that received from PCS,
+         * Then print the information on screen
+         */
         // ------------------------------------------------------------
         // handlePrintTicketInfo
         protected void handlePrintTicketInfo(String ticketinfo) {
@@ -82,13 +108,9 @@ public class PayMachineEmulator extends PayMachineHandler {
             if (ticketinfo != "") {
                 payMachineEmulatorController.appendTextArea("Total parking fee is: " + ticketinfo);
             }
-//            String[] tickDetails = ticketinfo.split(";");
-//            payMachineEmulatorController.appendTextArea(tickDetails[0]);
-//            payMachineEmulatorController.appendTextArea("Total parking fee is: " + tickDetails[1]);
-
         } // handlePrintTicketInfo
 
 
 
-    } // CardReaderEmulator
+    } // PayMachineEmulator
 

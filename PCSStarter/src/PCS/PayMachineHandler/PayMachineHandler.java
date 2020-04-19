@@ -50,6 +50,12 @@ public class PayMachineHandler extends AppThread {
                     handleErrorTicket();
                     break;
 
+                case PayMachineSuccess:
+                    log.warning(id + "The ticket with number " + msg.getDetails() + "has finished payment successfully!");
+                    handleSuccessTicket();
+                    break;
+
+
                 case Poll:
                     pcsCore.send(new Msg(id, mbox, Msg.Type.PollAck, id + " is up!"));
                     break;
@@ -69,21 +75,21 @@ public class PayMachineHandler extends AppThread {
     } // run
 
     /**
-     * This method is used to show the information when card is inserted
+     * This method is used to show the information when ticket is inserted
      */
 
     // ------------------------------------------------------------
-    // handleCardInsert
+    // handleTicketInsert
     protected void handleTicketInsert() {
         log.info(id + ": ticket inserted");
     } // handleCardInsert
 
     /**
-     * This method is used to show the information when card is inserted
+     * This method is used to show the information when ticket is removed
      */
 
     // ------------------------------------------------------------
-    // handleCardInsert
+    // handleTicketRemove
     protected void handleTicketRemove() {
         log.info(id + ": ticket removed");
     } // handleCardInsert
@@ -95,6 +101,10 @@ public class PayMachineHandler extends AppThread {
     protected void handleErrorTicket() {
         log.info(id + "ErrorTicket");
     } // handleErrorTicket
+
+    protected void handleSuccessTicket() {
+        log.info(id + "SuccessTicket");
+    } // handleSuccessTicket
 
 
 }
