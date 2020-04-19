@@ -1,7 +1,8 @@
 package PCS.VacancyDispHandler;
 
 import AppKickstarter.AppKickstarter;
-import AppKickstarter.misc.*;
+import AppKickstarter.misc.AppThread;
+import AppKickstarter.misc.Msg;
 
 public class VacancyDispHandler extends AppThread {
 

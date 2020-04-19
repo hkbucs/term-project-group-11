@@ -1,9 +1,11 @@
 package AppKickstarter.timer;
 
-import AppKickstarter.misc.*;
 import AppKickstarter.AppKickstarter;
+import AppKickstarter.misc.AppThread;
+import AppKickstarter.misc.Lib;
+import AppKickstarter.misc.MBox;
+import AppKickstarter.misc.Msg;
 
-import java.lang.Thread;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -521,7 +523,7 @@ public class Timer extends AppThread {
                     Thread.sleep(ticks);
                 } catch (Exception e) {
                 }
-				mbox.send(new Msg("Ticker", null, Msg.Type.Tick, "tick"));
+                mbox.send(new Msg("Ticker", null, Msg.Type.Tick, "tick"));
             }
         } // run
 

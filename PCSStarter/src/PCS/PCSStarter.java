@@ -3,15 +3,13 @@ package PCS;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.Msg;
 import AppKickstarter.timer.Timer;
-
-import PCS.PCSCore.PCSCore;
-import PCS.GateHandler.GateHandler;
 import PCS.CollectorHandler.CollectorHandler;
 import PCS.DispatcherHandler.DispatcherHandler;
+import PCS.GateHandler.GateHandler;
+import PCS.PCSCore.PCSCore;
 import PCS.PayMachineHandler.PayMachineHandler;
 import PCS.SensorHandler.SensorHandler;
 import PCS.VacancyDispHandler.VacancyDispHandler;
-
 import javafx.application.Platform;
 
 

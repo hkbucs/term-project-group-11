@@ -1,7 +1,9 @@
 package PCS.PayMachineHandler;
 
 import AppKickstarter.AppKickstarter;
-import AppKickstarter.misc.*;
+import AppKickstarter.misc.AppThread;
+import AppKickstarter.misc.MBox;
+import AppKickstarter.misc.Msg;
 
 public class PayMachineHandler extends AppThread {
 

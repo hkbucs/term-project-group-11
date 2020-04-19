@@ -1,7 +1,9 @@
 package PCS.PCSCore;
 
 import AppKickstarter.AppKickstarter;
-import AppKickstarter.misc.*;
+import AppKickstarter.misc.AppThread;
+import AppKickstarter.misc.MBox;
+import AppKickstarter.misc.Msg;
 import AppKickstarter.timer.Timer;
 import PCS.Ticket;
 

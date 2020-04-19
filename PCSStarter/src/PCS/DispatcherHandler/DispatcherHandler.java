@@ -1,7 +1,9 @@
 package PCS.DispatcherHandler;
 
 import AppKickstarter.AppKickstarter;
-import AppKickstarter.misc.*;
+import AppKickstarter.misc.AppThread;
+import AppKickstarter.misc.MBox;
+import AppKickstarter.misc.Msg;
 
 
 public class DispatcherHandler extends AppThread {
@@ -10,9 +12,9 @@ public class DispatcherHandler extends AppThread {
     /**
      * Constructor for the Handler
      *
-     * @param id id of this device
+     * @param id             id of this device
      * @param appKickstarter appKickstarter
-     * */
+     */
     public DispatcherHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
         pcsCore = appKickstarter.getThread("PCSCore").getMBox();
@@ -20,8 +22,7 @@ public class DispatcherHandler extends AppThread {
 
     /**
      * Function for running the thread
-     *
-     * */
+     */
     public void run() {
         Thread.currentThread().setName(id);
         log.info(id + ": starting...");
@@ -38,7 +39,7 @@ public class DispatcherHandler extends AppThread {
      * Function for message process
      *
      * @param msg message from msg queue
-     * */
+     */
     protected boolean processMsg(Msg msg) {
         boolean quit = false;
         switch (msg.getType()) {
@@ -67,7 +68,7 @@ public class DispatcherHandler extends AppThread {
 
     /**
      * Function for print ticket
-     * */
+     */
     //Dispatcher prepares the ticket
     protected void printTicket() {
         log.info(id + ": Ticket Printed");
@@ -75,7 +76,7 @@ public class DispatcherHandler extends AppThread {
 
     /**
      * Function for ticket was taken
-     * */
+     */
     //Driver collects the ticket from the dispatcher, and enters the parking lot
     protected void takeTicket() {
         log.info(id + ": Ticket was taken and door opened");
@@ -85,8 +86,8 @@ public class DispatcherHandler extends AppThread {
      * Function for new ticket number comes to the handler
      *
      * @parm ticketNumber ticket number
-     * */
-    protected void handleNewTicket(String ticketNumber){
+     */
+    protected void handleNewTicket(String ticketNumber) {
         log.info(id + ": New Ticket With Number " + ticketNumber);
     }
 }

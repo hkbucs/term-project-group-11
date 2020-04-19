@@ -1,9 +1,8 @@
 package PCS.DispatcherHandler.Emulator;
 
-import PCS.PCSStarter;
-import PCS.DispatcherHandler.DispatcherHandler;
 import AppKickstarter.misc.Msg;
-import AppKickstarter.timer.Timer;
+import PCS.DispatcherHandler.DispatcherHandler;
+import PCS.PCSStarter;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,8 +25,7 @@ public class DispatcherEmulator extends DispatcherHandler {
 
     /**
      * Function to start UI
-     *
-     * */
+     */
     public void start() throws Exception {
         Parent root;
         myStage = new Stage();
@@ -52,7 +50,7 @@ public class DispatcherEmulator extends DispatcherHandler {
      * Function for message process
      *
      * @param msg message from msg queue
-     * */
+     */
     protected final boolean processMsg(Msg msg) {
         boolean quit = false;
         quit = super.processMsg(msg);
@@ -61,14 +59,14 @@ public class DispatcherEmulator extends DispatcherHandler {
 
     /**
      * Function for print ticket
-     * */
+     */
     protected void printTicket() {
         logFine("Ticket was printed");
     }
 
     /**
      * Function for ticket was taken
-     * */
+     */
     protected void takeTicket() {
         logFine("Ticket was Taken");
     }
@@ -77,7 +75,7 @@ public class DispatcherEmulator extends DispatcherHandler {
      * Function for new ticket number comes to the handler
      *
      * @param ticketNumber ticket number
-     * */
+     */
     protected void handleNewTicket(String ticketNumber) {
         logFine("New Ticket With Number " + ticketNumber);
     }
@@ -86,18 +84,21 @@ public class DispatcherEmulator extends DispatcherHandler {
         dispatcherEmulatorController.appendTextArea("[FINE]: " + logMsg);
         log.fine(id + ": " + logMsg);
     } // logFine
+
     //------------------------------------------------------------
     // logInfo
     private final void logInfo(String logMsg) {
         dispatcherEmulatorController.appendTextArea("[INFO]: " + logMsg);
         log.info(id + ": " + logMsg);
     } // logInfo
+
     //------------------------------------------------------------
     // logWarning
     private final void logWarning(String logMsg) {
         dispatcherEmulatorController.appendTextArea("[WARNING]: " + logMsg);
         log.warning(id + ": " + logMsg);
     } // logWarning
+
     //------------------------------------------------------------
     // logSevere
     private final void logSevere(String logMsg) {

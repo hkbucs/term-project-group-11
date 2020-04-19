@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class Ticket {
     private static int count = 10000000;
-    private int ticketNumber;
-    private Date enterTime;
+    private final int ticketNumber;
+    private final Date enterTime;
     private Date leaveTime;
     private Date paymentTime;
     private double fee;
@@ -36,7 +36,7 @@ public class Ticket {
         this.leaveTime = leaveTime;
     }
 
-    public Date getPaymentTime(){
+    public Date getPaymentTime() {
         return paymentTime;
     }
 
@@ -44,11 +44,11 @@ public class Ticket {
         this.paymentTime = paymentTime;
     }
 
-    public double getFee(){
+    public double getFee() {
         return fee;
     }
 
-    public void setFee(double fee){
+    public void setFee(double fee) {
         this.fee = fee;
     }
 

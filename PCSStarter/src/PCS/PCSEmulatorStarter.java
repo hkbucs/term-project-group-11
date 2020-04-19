@@ -1,21 +1,19 @@
 package PCS;
 
 import AppKickstarter.timer.Timer;
-
-import PCS.PCSCore.PCSCore;
-import PCS.GateHandler.GateHandler;
-import PCS.GateHandler.Emulator.GateEmulator;
 import PCS.CollectorHandler.CollectorHandler;
 import PCS.CollectorHandler.Emulator.CollectorEmulator;
 import PCS.DispatcherHandler.DispatcherHandler;
 import PCS.DispatcherHandler.Emulator.DispatcherEmulator;
-import PCS.PayMachineHandler.PayMachineHandler;
+import PCS.GateHandler.Emulator.GateEmulator;
+import PCS.GateHandler.GateHandler;
+import PCS.PCSCore.PCSCore;
 import PCS.PayMachineHandler.Emulator.PayMachineEmulator;
-import PCS.SensorHandler.SensorHandler;
+import PCS.PayMachineHandler.PayMachineHandler;
 import PCS.SensorHandler.Emulator.SensorEmulator;
-import PCS.VacancyDispHandler.VacancyDispHandler;
+import PCS.SensorHandler.SensorHandler;
 import PCS.VacancyDispHandler.Emulator.VacancyDispEmulator;
-
+import PCS.VacancyDispHandler.VacancyDispHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;

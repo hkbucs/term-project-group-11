@@ -3,17 +3,18 @@ package PCS.PayMachineHandler.Emulator;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
-import PCS.PCSStarter;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
 public class PayMachineEmulatorController {
+    public TextField ticketNumField;
+    public TextArea ticketReaderTextArea;
     private String id;
     private AppKickstarter appKickstarter;
     private Logger log;
@@ -21,9 +22,6 @@ public class PayMachineEmulatorController {
     private LocalDateTime currentTime;
     private MBox PayMachineMBox;
     private boolean insert;
-
-    public TextField ticketNumField;
-    public TextArea ticketReaderTextArea;
 
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, PayMachineEmulator payMachineEmulator) {
         this.id = id;
@@ -50,25 +48,25 @@ public class PayMachineEmulatorController {
 
             //Type the ticket num and check whether the ticket exists or not, if yes, ticket can be inserted
             case "Insert Ticket":
-                if (ticketNumField.getText().length() != 0 &&  ticketNumField.getText().length() < 10 && insert == false ) {
+                if (ticketNumField.getText().length() != 0 && ticketNumField.getText().length() < 10 && insert == false) {
                     ticketReaderTextArea.appendText("Sending ticket [" + ticketNumField.getText() + "] to PCS for checking." + "\n");
                     PayMachineMBox.send(new Msg(id, PayMachineMBox, Msg.Type.PayMachineInsertTicket, ticketNumField.getText()));
                     insert = true;
                 }
                 break;
 
-                //Remove the ticket from pay machine
+            //Remove the ticket from pay machine
             case "Remove Ticket":
-                if(insert == true) {
+                if (insert == true) {
                     ticketReaderTextArea.appendText("Ticket removed\n");
                     PayMachineMBox.send(new Msg(id, PayMachineMBox, Msg.Type.PayMachineRemoveTicket, ticketNumField.getText()));
                     insert = false;
                 }
                 break;
 
-                //Process the payment function
+            //Process the payment function
             case "Pay":
-                if ( insert == true) {
+                if (insert == true) {
                     DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                     LocalDateTime now = LocalDateTime.now();
                     this.currentTime = now;

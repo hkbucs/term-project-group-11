@@ -1,20 +1,22 @@
 package PCS.CollectorHandler;
 
 import AppKickstarter.AppKickstarter;
-import AppKickstarter.misc.*;
+import AppKickstarter.misc.AppThread;
+import AppKickstarter.misc.MBox;
+import AppKickstarter.misc.Msg;
 
 
 public class CollectorHandler extends AppThread {
+    protected final MBox pcsCore;
     private CollectorStatus status;
     private boolean alarm;
-    protected final MBox pcsCore;
 
     /**
      * Constructor for the Handler
      *
-     * @param id id of this device
+     * @param id             id of this device
      * @param appKickstarter app kickstarter
-     * */
+     */
     public CollectorHandler(String id, AppKickstarter appKickstarter) {
         super(id, appKickstarter);
         pcsCore = appKickstarter.getThread("PCSCore").getMBox();
@@ -23,8 +25,7 @@ public class CollectorHandler extends AppThread {
 
     /**
      * Function for running the thread
-     *
-     * */
+     */
     public void run() {
         Thread.currentThread().setName(id);
         log.info(id + ": starting...");
@@ -41,8 +42,8 @@ public class CollectorHandler extends AppThread {
      * Function for message process
      *
      * @param msg message from msg queue
-     * */
-    protected boolean processMsg(Msg msg){
+     */
+    protected boolean processMsg(Msg msg) {
         boolean quit = false;
         switch (msg.getType()) {
             case CollectorInsertTicket:
@@ -61,8 +62,7 @@ public class CollectorHandler extends AppThread {
             case AdminOpen:
                 log.info(id + ": Admin Pressed the Button");
                 pcsCore.send(new Msg(id, mbox, Msg.Type.AdminOpen, ""));
-                switch (status)
-                {
+                switch (status) {
                     case RingingAlarm:
                         log.info(id + ": Admin stopped alarm and opened the door");
                         alarm = false;
@@ -126,18 +126,18 @@ public class CollectorHandler extends AppThread {
      * Function for alarm signal
      *
      * @param alarmSignal alarm status
-     * */
+     */
     protected void alarmSignal(boolean alarmSignal) {
-        if(alarmSignal){
+        if (alarmSignal) {
             log.info(id + ": Ring the Alarm");
-        }else{
+        } else {
             log.info(id + ": Stop the Alarm");
         }
     }
 
     /**
      * status in this class
-     * */
+     */
     private enum CollectorStatus {
         Idle,
         CollectorInsertTicket,

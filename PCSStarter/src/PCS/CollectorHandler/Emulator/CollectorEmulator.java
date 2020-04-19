@@ -1,9 +1,8 @@
 package PCS.CollectorHandler.Emulator;
 
-import PCS.PCSStarter;
+import AppKickstarter.misc.Msg;
 import PCS.CollectorHandler.CollectorHandler;
-import AppKickstarter.misc.*;
-import AppKickstarter.timer.Timer;
+import PCS.PCSStarter;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,8 +25,7 @@ public class CollectorEmulator extends CollectorHandler {
 
     /**
      * Function to start UI
-     *
-     * */
+     */
     public void start() throws Exception {
         Parent root;
         myStage = new Stage();
@@ -52,7 +50,7 @@ public class CollectorEmulator extends CollectorHandler {
      * Function for message process
      *
      * @param msg message from msg queue
-     * */
+     */
     protected final boolean processMsg(Msg msg) {
         boolean quit = false;
         quit = super.processMsg(msg);
@@ -63,15 +61,14 @@ public class CollectorEmulator extends CollectorHandler {
      * Function when card inserted
      *
      * @param tID ticket id
-     * */
+     */
     protected void insertedTicket(String tID) {
         logFine("Ticket Inserted " + tID);
     }
 
     /**
      * Function to respond to admin open
-     *
-     * */
+     */
     protected void adminOpen() {
         logFine("Admin has Pressed");
     }
@@ -80,18 +77,17 @@ public class CollectorEmulator extends CollectorHandler {
      * Function for alarm signal
      *
      * @param alarmSignal alarm status
-     * */
+     */
     protected void alarmSignal(boolean alarmSignal) {
-        if(alarmSignal){
+        if (alarmSignal) {
             logWarning("Alarm Ringing");
         }
     }
 
     /**
      * Function for wrong ticket number
-     *
-     * */
-    protected void wrongTicket(){
+     */
+    protected void wrongTicket() {
         logWarning("Wrong Ticket");
     }
 
@@ -99,18 +95,21 @@ public class CollectorEmulator extends CollectorHandler {
         collectorEmulatorController.appendTextArea("[FINE]: " + logMsg);
         log.fine(id + ": " + logMsg);
     } // logFine
+
     //------------------------------------------------------------
     // logInfo
     private final void logInfo(String logMsg) {
         collectorEmulatorController.appendTextArea("[INFO]: " + logMsg);
         log.info(id + ": " + logMsg);
     } // logInfo
+
     //------------------------------------------------------------
     // logWarning
     private final void logWarning(String logMsg) {
         collectorEmulatorController.appendTextArea("[WARNING]: " + logMsg);
         log.warning(id + ": " + logMsg);
     } // logWarning
+
     //------------------------------------------------------------
     // logSevere
     private final void logSevere(String logMsg) {

@@ -1,11 +1,9 @@
 package PCS.GateHandler.Emulator;
 
-import AppKickstarter.misc.*;
+import AppKickstarter.misc.Msg;
 import AppKickstarter.timer.Timer;
-
-import PCS.PCSStarter;
 import PCS.GateHandler.GateHandler;
-
+import PCS.PCSStarter;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
