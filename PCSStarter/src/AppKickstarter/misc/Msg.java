@@ -110,6 +110,7 @@ public class Msg {
         /** Do the payment on PayMachine */  PayMachinePayment,
         /** Print the information of ticket */ PrintTicketInfo,
         /** Pay Machine Error */ PayMachineError,
+        /** Pay Successfully */ PayMachineSuccess,
         /** Car passes through Sensor Emulator */ CarPassThrough,
         /** Car leaves Sensor Emulator  */ CarLeave,
         /** Update display info on Vacancy Display Emulator */ UpdateDisplay,

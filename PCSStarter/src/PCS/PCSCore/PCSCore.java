@@ -96,13 +96,13 @@ public class PCSCore extends AppThread {
                     break;
 
                 case DispatcherTakeTicket:
-                    log.info(id + ": ticket was taken.");
+                    log.info(id + ": ticket was taken by Dispatcher.");
                     gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
                     break;
 
-                /** For message from Dispatcher */
+                /** For message from Collector */
                 case CollectorInsertTicket:
-                    log.info(id + ": ticket was taken.");
+                    log.info(id + ": ticket was taken by Collector.");
 //                    checkCollectedTicket(msg.getDetails());
                     handleValidation(msg.getDetails());
                     break;
@@ -210,19 +210,24 @@ public class PCSCore extends AppThread {
     }
 
     private void handlePayMachineTicket(String ticketNumber) {
-        Ticket ticket = ticketMap.get(Integer.parseInt(ticketNumber));
-        // Validate whether the ticket is exist
-        if (ticket != null){
-            Date paymentTime = new Date();
-            ticket.setPaymentTime(paymentTime);
-            log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] the payment time is updated");
-            double fee = calculateFee(ticket.getEnterTime(), ticket.getPaymentTime());
-            ticket.setFee(fee);
-            log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] the parking fee is updated");
-            String message = String.valueOf(ticket.getFee());
-            payMachineMBox.send(new Msg(id, mbox, Msg.Type.PrintTicketInfo, message));
-        }else{
-            log.warning(id + ": Ticket[" + ticketNumber + "] does not exist");
+        try{
+            Ticket ticket = ticketMap.get(Integer.parseInt(ticketNumber));
+            // Validate whether the ticket is exist
+            if (ticket != null){
+                Date paymentTime = new Date();
+                ticket.setPaymentTime(paymentTime);
+                log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] the payment time is updated");
+                double fee = calculateFee(ticket.getEnterTime(), ticket.getPaymentTime());
+                ticket.setFee(fee);
+                log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] the parking fee is updated");
+                String message = ticket.getPaymentTime().toString() + "|" + String.valueOf(ticket.getFee());
+                payMachineMBox.send(new Msg(id, mbox, Msg.Type.PrintTicketInfo, message));
+            }else{
+                log.warning(id + ": Ticket[" + ticketNumber + "] does not exist");
+                payMachineMBox.send(new Msg(id, mbox, Msg.Type.PayMachineError, ticketNumber));
+            }
+        }catch (NumberFormatException e){
+            log.warning(id + ": Invalid input. " + e.getMessage());
             payMachineMBox.send(new Msg(id, mbox, Msg.Type.PayMachineError, ticketNumber));
         }
     }
@@ -259,40 +264,55 @@ public class PCSCore extends AppThread {
     }
 
     private void handlePayment(String ticketNumber){
-        Ticket ticket = ticketMap.get(Integer.parseInt(ticketNumber));
-        // Validate whether the ticket is exist
-        if (ticket != null){
-            ticket.setPaid(true);
-            log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] the payment status is updated");
-        }else{
-            log.warning(id + ": Ticket[" + ticketNumber + "] does not exist");
+        try{
+            Ticket ticket = ticketMap.get(Integer.parseInt(ticketNumber));
+            // Validate whether the ticket is exist
+            if (ticket != null){
+                ticket.setPaid(true);
+                log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] the payment status is updated");
+                payMachineMBox.send(new Msg(id, mbox, Msg.Type.PayMachineSuccess, ticketNumber));
+            }else{
+                log.warning(id + ": Ticket[" + ticketNumber + "] does not exist");
+                payMachineMBox.send(new Msg(id, mbox, Msg.Type.PayMachineError, ticketNumber));
+            }
+        }catch (NumberFormatException e){
+            log.warning(id + ": Invalid input. " + e.getMessage());
             payMachineMBox.send(new Msg(id, mbox, Msg.Type.PayMachineError, ticketNumber));
         }
     }
 
     // validate function for collector
     private void handleValidation(String ticketNumber){
-        Ticket ticket = ticketMap.get(Integer.parseInt(ticketNumber));
-        boolean flag = false;
-        // Validate whether the ticket is exist
-        if (ticket != null){
-            // Validate Start(so far only check the payment)
-            // 1. check payment
-            if(ticket.getPaid()){
-                flag = true;
-            }
-            // Validate finish
-            if(flag){
-                ticket.setValidation(flag);
-                log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] is validated");
-                collectorMBox.send(new Msg(id, mbox, Msg.Type.PAck, ""));
+        try{
+            Ticket ticket = ticketMap.get(Integer.parseInt(ticketNumber));
+            boolean flag = false;
+            // Validate whether the ticket is exist
+            if (ticket != null){
+                // Validate Start(so far only check the payment)
+                // 1. check payment
+                if(ticket.getPaid()){
+                    flag = true;
+                }
+                // Validate finish
+                if(flag){
+                    ticket.setValidation(flag);
+                    log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] is valid");
+                    collectorMBox.send(new Msg(id, mbox, Msg.Type.PAck, ""));
+                    log.info(id + ": Open Gate.");
+                    gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
+                }else{
+                    log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] is invalid");
+                    collectorMBox.send(new Msg(id, mbox, Msg.Type.NAck, ""));
+                }
             }else{
-                collectorMBox.send(new Msg(id, mbox, Msg.Type.NAck, ""));
+                log.warning(id + ": Ticket[" + ticketNumber + "] does not exist");
+                collectorMBox.send(new Msg(id, mbox, Msg.Type.CollectorError, ticketNumber));
             }
-        }else{
-            log.warning(id + ": Ticket[" + ticketNumber + "] does not exist");
-            payMachineMBox.send(new Msg(id, mbox, Msg.Type.CollectorError, ticketNumber));
+        }catch (NumberFormatException e){
+            log.warning(id + ": Invalid input. " + e.getMessage());
+            collectorMBox.send(new Msg(id, mbox, Msg.Type.CollectorError, ticketNumber));
         }
+
     }
 
 } // PCSCore
