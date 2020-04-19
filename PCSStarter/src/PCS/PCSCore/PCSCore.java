@@ -89,6 +89,7 @@ public class PCSCore extends AppThread {
                     handlePayment(msg.getDetails());
                     break;
 
+
                 /** For message from Dispatcher */
                 case DispatcherCreateTicket:
                     log.info(id + ": ready to create a ticket.");
