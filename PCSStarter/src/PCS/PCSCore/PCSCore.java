@@ -96,13 +96,13 @@ public class PCSCore extends AppThread {
                     break;
 
                 case DispatcherTakeTicket:
-                    log.info(id + ": ticket was taken.");
+                    log.info(id + ": ticket was taken by Dispatcher.");
                     gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
                     break;
 
-                /** For message from Dispatcher */
+                /** For message from Collector */
                 case CollectorInsertTicket:
-                    log.info(id + ": ticket was taken.");
+                    log.info(id + ": ticket was taken by Collector.");
 //                    checkCollectedTicket(msg.getDetails());
                     handleValidation(msg.getDetails());
                     break;
@@ -284,14 +284,17 @@ public class PCSCore extends AppThread {
             // Validate finish
             if(flag){
                 ticket.setValidation(flag);
-                log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] is validated");
+                log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] is valid");
                 collectorMBox.send(new Msg(id, mbox, Msg.Type.PAck, ""));
+                log.info(id + ": Open Gate.");
+                gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
             }else{
+                log.info(id  + ": Ticket["+ ticket.getTicketNumber() +"] is invalid");
                 collectorMBox.send(new Msg(id, mbox, Msg.Type.NAck, ""));
             }
         }else{
             log.warning(id + ": Ticket[" + ticketNumber + "] does not exist");
-            payMachineMBox.send(new Msg(id, mbox, Msg.Type.CollectorError, ticketNumber));
+            collectorMBox.send(new Msg(id, mbox, Msg.Type.CollectorError, ticketNumber));
         }
     }
 
