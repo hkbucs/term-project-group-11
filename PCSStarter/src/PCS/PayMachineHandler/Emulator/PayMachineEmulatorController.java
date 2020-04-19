@@ -58,7 +58,6 @@ public class PayMachineEmulatorController {
             case "Remove Ticket":
                 if(insert == true) {
                     ticketReaderTextArea.appendText("Ticket removed\n");
-                    ticketReaderTextArea.appendText("Please collect your ticket\n");
                     PayMachineMBox.send(new Msg(id, PayMachineMBox, Msg.Type.PayMachineRemoveTicket, ticketNumField.getText()));
                     insert = false;
                 }
@@ -70,10 +69,9 @@ public class PayMachineEmulatorController {
                     LocalDateTime now = LocalDateTime.now();
                     this.currentTime = now;
                     String paymentTime = df.format(now);
-                    ticketReaderTextArea.appendText("Payment Time: " + paymentTime + "\n");
+                    ticketReaderTextArea.appendText("Current time is : " + paymentTime + "\n");
 
                     PayMachineMBox.send(new Msg(id, PayMachineMBox, Msg.Type.PayMachinePayment, ticketNumField.getText()));
-                    ticketReaderTextArea.appendText("Pay Successfully\n");
                 }
                 break;
 

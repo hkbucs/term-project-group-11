@@ -53,7 +53,7 @@ public class PayMachineEmulator extends PayMachineHandler {
     }
         protected void handleTicketInsert() {
             super.handleTicketInsert();
-            payMachineEmulatorController.appendTextArea("Ticket Inserted");
+            payMachineEmulatorController.appendTextArea("Ticket Inserted\n");
         } // handleCardInsert
 
         /**
@@ -65,7 +65,7 @@ public class PayMachineEmulator extends PayMachineHandler {
         // handleCardRemove
         protected void handleTicketRemove() {
             super.handleTicketRemove();
-            payMachineEmulatorController.appendTextArea("Ticket Removed\n");
+            payMachineEmulatorController.appendTextArea("Please collect your ticket\n");
         } // handleCardRemove
 
         // ------------------------------------------------------------
@@ -74,6 +74,12 @@ public class PayMachineEmulator extends PayMachineHandler {
             super.handleErrorTicket();
             payMachineEmulatorController.appendTextArea("Ticket does not exist!\n");
         } // handleErrorTicket
+
+        // handleErrorTicket
+        protected void handleSuccessTicket() {
+            super.handleSuccessTicket();
+            payMachineEmulatorController.appendTextArea("Pay Successfully!\n");
+        } // handleSuccessTicket
 
         // ------------------------------------------------------------
         // handlePrintTicketInfo
