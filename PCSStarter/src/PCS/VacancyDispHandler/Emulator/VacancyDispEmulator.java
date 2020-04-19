@@ -49,25 +49,31 @@ public class VacancyDispEmulator extends VacancyDispHandler {
         myStage.show();
     }
 
+    //------------------------------------------------------------
+    // processMsg
+    protected boolean processMsg(Msg msg) {
+        boolean quit = false;
+
+        switch (msg.getType()) {
+            case UpdateDisplay:
+                handleUpdateDisplay(msg);
+                break;
+
+            default:
+                super.processMsg(msg);
+        }
+        return quit;
+    } // processMsg
+
     protected void handleUpdateDisplay(Msg msg) {
         Platform.runLater(() -> {
             log.info(id + ": " + msg.getDetails() + " and update display.");
 
-            switch (msg.getType()) {
-                case UpdateDisplay:
-                    String[] details = msg.getDetails().split("-");
-                    if (details[1].equals("1")){
-                        vacancyDispEmulatorController.handleNumberIncrease(details[0]);
-                    }
-                    if (details[1].equals("2")){
-                        vacancyDispEmulatorController.handleNumberDecrease(details[0]);
-                    }
-                    break;
+            String[] details = msg.getDetails().split("-");
+            String currentFloor = details[1];
+            String direction = details[2];
+            vacancyDispEmulatorController.handleNumberUpdate(currentFloor, direction, myStage.getScene());
 
-                default:
-                    log.severe(id + ": update cash dispenser display with unknown display type -- " + msg.getDetails());
-                    break;
-            }
         });
     }
 

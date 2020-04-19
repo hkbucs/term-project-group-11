@@ -3,6 +3,7 @@ package PCS.VacancyDispHandler.Emulator;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 
 import java.util.logging.Logger;
@@ -23,6 +24,14 @@ public class VacancyDispEmulatorController {
     private VacancyDispEmulator vacancyDispEmulator;
     private MBox vacancyDispMBox;
 
+    /**
+     * Initialize the emulator controller of .fxml.
+     *
+     * @param id                  Thread id
+     * @param appKickstarter      A reference to Appkickstarter
+     * @param log                 A reference to Logger
+     * @param vacancyDispEmulator A reference to VacancyDispEmulator
+     */
     public void initialize(String id, AppKickstarter appKickstarter, Logger log, VacancyDispEmulator vacancyDispEmulator) {
         this.id = id;
         this.appKickstarter = appKickstarter;
@@ -37,37 +46,35 @@ public class VacancyDispEmulatorController {
         floor4.setText(this.appKickstarter.getProperty("Park.floorQuota"));
     }
 
-    protected void handleNumberIncrease(String currentFloor){
-        switch (currentFloor){
-            case "floor1":
-                floor1.setText(String.valueOf(Integer.parseInt(floor1.getText())+1));
+    /**
+     * A function of updating the display number
+     * of the vacancy display emulator.
+     *
+     * @param current   The number of current floor.
+     * @param direction The moving direction of car
+     * @param scene     The scene of the vacancy display emulator.
+     */
+    protected void handleNumberUpdate(String current, String direction, Scene scene) {
+        String currentFloor = "floor" + current;
+        String nextFloor = "floor";
+        TextField tfCurrent;
+        TextField tfNext;
+        switch (direction) {
+            case "up":
+                nextFloor += String.valueOf(Integer.parseInt(current) + 1);
                 break;
-            case "floor2":
-                floor2.setText(String.valueOf(Integer.parseInt(floor2.getText())+1));
-                break;
-            case "floor3":
-                floor3.setText(String.valueOf(Integer.parseInt(floor3.getText())+1));
-                break;
-            case "floor4":
-                floor4.setText(String.valueOf(Integer.parseInt(floor4.getText())+1));
-                break;
-        }
-    }
+            case "down":
+                nextFloor += String.valueOf(Integer.parseInt(current) - 1);
 
-    protected void handleNumberDecrease(String currentFloor){
-        switch (currentFloor){
-            case "floor1":
-                floor1.setText(String.valueOf(Integer.parseInt(floor1.getText())-1));
-                break;
-            case "floor2":
-                floor2.setText(String.valueOf(Integer.parseInt(floor2.getText())-1));
-                break;
-            case "floor3":
-                floor3.setText(String.valueOf(Integer.parseInt(floor3.getText())-1));
-                break;
-            case "floor4":
-                floor4.setText(String.valueOf(Integer.parseInt(floor4.getText())-1));
-                break;
+        }
+        tfCurrent = (TextField) scene.lookup("#" + currentFloor);
+        tfNext = (TextField) scene.lookup("#" + nextFloor);
+
+        if (Integer.parseInt(tfCurrent.getText()) < Integer.parseInt(this.appKickstarter.getProperty("Park.floorQuota"))) {
+            tfCurrent.setText(String.valueOf(Integer.parseInt(tfCurrent.getText()) + 1));
+        }
+        if (Integer.parseInt(tfNext.getText()) > 0) {
+            tfNext.setText(String.valueOf(Integer.parseInt(tfNext.getText()) - 1));
         }
     }
 

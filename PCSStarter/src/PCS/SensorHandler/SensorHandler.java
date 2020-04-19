@@ -28,13 +28,9 @@ public class SensorHandler extends AppThread {
                 case CarPassThrough:
                     pcsCore.send(new Msg(id, mbox, Msg.Type.CarPassThrough, msg.getDetails()));
                     break;
-
-                case CarLeave:
-                    pcsCore.send(new Msg(id, mbox, Msg.Type.CarLeave, msg.getDetails()));
-                    break;
-
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");
+                    break;
             }
         }
 

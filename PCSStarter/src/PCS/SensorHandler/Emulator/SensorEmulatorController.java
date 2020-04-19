@@ -30,11 +30,7 @@ public class SensorEmulatorController {
         String buTxt = bu.getText();
         String buID = bu.getId();
         if (!buTxt.isEmpty()) {
-            if (buTxt.trim().equals("Down")) {
-                sensorMBox.send(new Msg(id, sensorMBox, Msg.Type.CarLeave, buID));
-            } else {
-                sensorMBox.send(new Msg(id, sensorMBox, Msg.Type.CarPassThrough, buID));
-            }
+            sensorMBox.send(new Msg(id, sensorMBox, Msg.Type.CarPassThrough, buID));
         }
     }
 }
