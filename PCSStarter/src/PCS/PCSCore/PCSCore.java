@@ -13,25 +13,16 @@ import java.util.ArrayList;
 //======================================================================
 // PCSCore
 public class PCSCore extends AppThread {
-<<<<<<< HEAD
-=======
-    private MBox gateMBox;
-    private MBox paymentMBox;
-    private MBox dispatcherMBox;
-    private MBox collectorMBox;
-
->>>>>>> 590624b780ce189e9999aea496a3b68eec839b5a
     private final int pollTime;
     private final int PollTimerID = 1;
     private final int openCloseGateTime;        // for demo only!!!
     private final int OpenCloseGateTimerID = 2;        // for demo only!!!
-<<<<<<< HEAD
     private MBox gateMBox;
-    private boolean gateIsClosed = true;        // for demo only!!!
-=======
+    private MBox paymentMBox;
+    private MBox dispatcherMBox;
+    private MBox collectorMBox;
     private boolean gateIsClosed = true;        // for demo only!!
-    private ArrayList<Ticket> tickets = new ArrayList<Ticket>();
->>>>>>> 590624b780ce189e9999aea496a3b68eec839b5a
+    private final ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 
 
     //------------------------------------------------------------
@@ -52,12 +43,9 @@ public class PCSCore extends AppThread {
         log.info(id + ": starting...");
 
         gateMBox = appKickstarter.getThread("GateHandler").getMBox();
-<<<<<<< HEAD
-=======
         dispatcherMBox = appKickstarter.getThread("DispatcherHandler").getMBox();
         collectorMBox = appKickstarter.getThread("CollectorHandler").getMBox();
         paymentMBox = appKickstarter.getThread("id:PayMachineHandler").getMBox();
->>>>>>> 590624b780ce189e9999aea496a3b68eec839b5a
 
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
@@ -79,8 +67,6 @@ public class PCSCore extends AppThread {
                     gateIsClosed = true;
                     break;
 
-<<<<<<< HEAD
-=======
                 case OpenSignal:
                     log.info(id + ": sending gate open signal to hardware.");
                     break;
@@ -122,7 +108,6 @@ public class PCSCore extends AppThread {
                     gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
                     break;
 
->>>>>>> 590624b780ce189e9999aea496a3b68eec839b5a
                 case PollAck:
                     log.info("PollAck: " + msg.getDetails());
                     break;
@@ -171,33 +156,27 @@ public class PCSCore extends AppThread {
     } // handleTimesUp
 
 
-    private void checkCollectedTicket(String tID){
+    private void checkCollectedTicket(String tID) {
         int ticketID = Integer.parseInt(tID);
         int count = -1;
-        for (int i = 0; i < tickets.size(); i++)
-        {
-            if (tickets.get(i).getId() == ticketID)
-            {
+        for (int i = 0; i < tickets.size(); i++) {
+            if (tickets.get(i).getId() == ticketID) {
                 count = i;
                 break;
             }
         }
-        if (count == -1){
+        if (count == -1) {
             log.info(id + ": Ticket number is wrong.");
             collectorMBox.send(new Msg(id, mbox, Msg.Type.WrongTicketNumber, ""));
             return;
-        }
-        else if (tickets.get(count).getFinishPayment())
-        {
+        } else if (tickets.get(count).getFinishPayment()) {
             log.info(id + ": Ticket is valid.");
             collectorMBox.send(new Msg(id, mbox, Msg.Type.PAck, ""));
             log.info(id + ": Open Gate.");
             gateMBox.send(new Msg(id, mbox, Msg.Type.GateOpenRequest, ""));
             log.info(id + ": ticket leave.");
             tickets.get(count).leave();
-        }
-        else
-        {
+        } else {
             log.info(id + ": Ticket is not leaving.");
             collectorMBox.send(new Msg(id, mbox, Msg.Type.NAck, ""));
         }
